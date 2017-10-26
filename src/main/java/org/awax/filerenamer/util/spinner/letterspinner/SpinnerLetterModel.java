@@ -33,56 +33,58 @@ import javax.swing.SpinnerListModel;
  * spinner affichant les lettres de A à Z. Lorsque la lettre Z est atteinte
  * alors on ajoute un digit (Exemple : AZ) ce qui revient en fait à compter en
  * base 26.
- * 
+ *
  * @author Julien
  * @created 1 nov. 2014
  * @version 1.0
  */
 public class SpinnerLetterModel extends SpinnerListModel {
 
-	private ArrayList<Character> list;
-	private Character value;
+    private static final long serialVersionUID = -8797552703384030419L;
 
-	/**
-	 * Permet d'instancier un modèle.
-	 * 
-	 * @param value
-	 *            Valeur initiale du modèle.
-	 */
-	public SpinnerLetterModel (char value) {
-		this.list = new ArrayList<Character>();
-		for (int i = 'a'; i <= 'z'; i++) {
-			this.list.add((char) ('a' + i));
-		}
-		this.value = value;
-	}
+    private final ArrayList<Character> list;
+    private Character value;
 
-	@Override
-	public List<?> getList () {
-		ArrayList<Character> newList = new ArrayList<>();
-		for (char c : this.list) {
-			newList.add(c);
-		}
-		return newList;
-	}
+    /**
+     * Permet d'instancier un modèle.
+     *
+     * @param value
+     *            Valeur initiale du modèle.
+     */
+    public SpinnerLetterModel(final char value) {
+        this.list = new ArrayList<Character>();
+        for (int i = 'a'; i <= 'z'; i++) {
+            this.list.add((char) ('a' + i));
+        }
+        this.value = value;
+    }
 
-	@Override
-	public Object getValue () {
-		return this.value;
-	}
+    @Override
+    public List<?> getList () {
+        ArrayList<Character> newList = new ArrayList<>();
+        for (char c : this.list) {
+            newList.add(c);
+        }
+        return newList;
+    }
 
-	@Override
-	public void setValue (Object elt) {
-		this.value = (Character) elt;
-	}
+    @Override
+    public Object getValue () {
+        return this.value;
+    }
 
-	@Override
-	public Object getNextValue () {
-		return super.getNextValue();
-	}
+    @Override
+    public void setValue (final Object elt) {
+        this.value = (Character) elt;
+    }
 
-	@Override
-	public Object getPreviousValue () {
-		return super.getPreviousValue();
-	}
+    @Override
+    public Object getNextValue () {
+        return super.getNextValue();
+    }
+
+    @Override
+    public Object getPreviousValue () {
+        return super.getPreviousValue();
+    }
 }

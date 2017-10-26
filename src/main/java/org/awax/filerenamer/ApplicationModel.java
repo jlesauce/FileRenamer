@@ -28,80 +28,80 @@ import java.util.Observable;
 
 import javax.swing.filechooser.FileSystemView;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.awax.filerenamer.util.FileInfo;
 
 /**
  * Modèle de données de l'application.
- * 
+ *
  * @author AwaX
  * @created 23 oct. 2014
  * @version 1.0
  */
 public class ApplicationModel extends Observable {
 
-	private final Logger logger;
-	private final String appName;
-	private final FileSystemView fileSystemView;
-	private ArrayList<FileInfo> fileSelection;
-	private ArrayList<FileInfo> currentFileSelection;
+    private final Logger logger;
+    private final String appName;
+    private final FileSystemView fileSystemView;
+    private ArrayList<FileInfo> fileSelection;
+    private ArrayList<FileInfo> currentFileSelection;
 
-	/**
-	 * Permet d'instancier le modèle de données de l'application par défaut.
-	 */
-	public ApplicationModel () {
-		this.logger = Logger.getLogger(getClass());
-		this.appName = "File Renamer";
-		this.fileSystemView = FileSystemView.getFileSystemView();
-		this.fileSelection = new ArrayList<>();
-		this.currentFileSelection = new ArrayList<>();
-	}
+    /**
+     * Permet d'instancier le modèle de données de l'application par défaut.
+     */
+    public ApplicationModel() {
+        this.logger = LogManager.getLogger();
+        this.appName = "File Renamer";
+        this.fileSystemView = FileSystemView.getFileSystemView();
+        this.fileSelection = new ArrayList<>();
+        this.currentFileSelection = new ArrayList<>();
+    }
 
-	/**
-	 * Permet de notifier tous les abonnés d'une modification du modèle de
-	 * données.
-	 * 
-	 * @param obj
-	 *            (Optionnel) Il est possible de préciser un objet à transmettre
-	 *            aux abonnés.
-	 */
-	public void notifyChanged (Object... obj) {
-		this.setChanged();
-		if (obj == null || obj.length == 0) {
-			this.notifyObservers();
-		} else if (obj.length == 1) {
-			this.notifyObservers(obj);
-		} else {
-			throw new IllegalArgumentException("Only one argument accepted");
-		}
-		this.clearChanged();
-	}
+    /**
+     * Permet de notifier tous les abonnés d'une modification du modèle de données.
+     *
+     * @param obj
+     *            (Optionnel) Il est possible de préciser un objet à transmettre aux
+     *            abonnés.
+     */
+    public void notifyChanged (final Object... obj) {
+        this.setChanged();
+        if (obj == null || obj.length == 0) {
+            this.notifyObservers();
+        } else if (obj.length == 1) {
+            this.notifyObservers(obj);
+        } else {
+            throw new IllegalArgumentException("Only one argument accepted");
+        }
+        this.clearChanged();
+    }
 
-	public String getAppName () {
-		return this.appName;
-	}
+    public String getAppName () {
+        return this.appName;
+    }
 
-	public FileSystemView getFileSystemView () {
-		return this.fileSystemView;
-	}
+    public FileSystemView getFileSystemView () {
+        return this.fileSystemView;
+    }
 
-	public ArrayList<FileInfo> getFileSelection () {
-		return this.fileSelection;
-	}
+    public ArrayList<FileInfo> getFileSelection () {
+        return this.fileSelection;
+    }
 
-	public void setFileSelection (ArrayList<FileInfo> fileSelection) {
-		this.logger.debug("Updating file selection");
-		this.fileSelection = fileSelection;
-		setCurrentFileSelection(fileSelection);
-	}
+    public void setFileSelection (final ArrayList<FileInfo> fileSelection) {
+        this.logger.debug("Updating file selection");
+        this.fileSelection = fileSelection;
+        setCurrentFileSelection(fileSelection);
+    }
 
-	public ArrayList<FileInfo> getCurrentFileSelection () {
-		return this.currentFileSelection;
-	}
+    public ArrayList<FileInfo> getCurrentFileSelection () {
+        return this.currentFileSelection;
+    }
 
-	public void setCurrentFileSelection (ArrayList<FileInfo> fileSelection) {
-		this.logger.debug("Updating current file selection");
-		this.currentFileSelection = fileSelection;
-		notifyChanged(fileSelection);
-	}
+    public void setCurrentFileSelection (final ArrayList<FileInfo> fileSelection) {
+        this.logger.debug("Updating current file selection");
+        this.currentFileSelection = fileSelection;
+        notifyChanged(fileSelection);
+    }
 }

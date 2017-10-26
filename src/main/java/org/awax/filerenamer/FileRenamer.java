@@ -24,73 +24,60 @@
 package org.awax.filerenamer;
 
 import java.io.File;
+import java.net.URL;
 
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
-import org.apache.log4j.Logger;
-import org.apache.log4j.xml.DOMConfigurator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.awax.filerenamer.util.ResourceManager;
 
-/**
- * Classe principale de l'application.
- * 
- * @author AwaX
- * @created 23 oct. 2014
- * @version 1.0
- */
 public class FileRenamer {
 
-	/**
-	 * Permet de lancer l'application.
-	 * 
-	 * @param args
-	 *            Pas d'arguments.
-	 */
-	public static void main (String[] args) {
-		configureLogger();
-		Logger logger = Logger.getLogger(FileRenamer.class);
+    public static void main (final String[] args) {
+        /*
+         * Configure the logger
+         */
+        String log4jKey = "log4j.configurationFile";
+        // If no configuration is configured
+        if (System.getProperty(log4jKey) == null) {
+            // Load the default configuration
+            String path = ResourceManager.LOG4J_FILE;
+            URL url = Thread.currentThread().getContextClassLoader().getResource(path);
+            if (url == null) {
+                path = ResourceManager.RESOURCES_DIR + File.separator + ResourceManager.LOG4J_FILE;
+                url = Thread.currentThread().getContextClassLoader().getResource(path);
+            }
+            System.setProperty(log4jKey, url.getFile());
+        }
+        final Logger logger = LogManager.getLogger();
+        logger.info("log4j configuration file set : {}", System.getProperty(log4jKey));
 
-		/*
-		 * Look & Feel Nimbus
-		 */
-		try {
-			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-				if ("Nimbus".equals(info.getName())) {
-					UIManager.setLookAndFeel(info.getClassName());
-					logger.info("Setting Nimbus look & feel");
-					break;
-				}
-			}
-		} catch (Exception e) {
-			logger.warn("Cannot set java look and feel");
-		}
+        /*
+         * Look & Feel Nimbus
+         */
+        try {
+            for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    UIManager.setLookAndFeel(info.getClassName());
+                    logger.info("Setting Nimbus look & feel");
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            logger.warn("Cannot set java look and feel");
+        }
 
-		/*
-		 * Lancement de l'application
-		 */
-		SwingUtilities.invokeLater(new Runnable() {
+        SwingUtilities.invokeLater(new Runnable() {
 
-			@Override
-			public void run () {
-				ApplicationModel model = new ApplicationModel();
-				ApplicationController controller = new ApplicationController(model);
-				controller.showGui();
-			}
-		});
-	}
-
-	/**
-	 * Permet de configurer le logger.
-	 */
-	private static void configureLogger () {
-		File configFile = new File(ResourceManager.getResource("log4j.xml").getPath());
-		// Chargement du fichier de configuration par défaut
-		if (configFile.exists()) {
-			DOMConfigurator.configure(configFile.getAbsolutePath());
-		} else {
-			throw new RuntimeException("Invalid log4j property file");
-		}
-	}
+            @Override
+            public void run () {
+                ApplicationModel model = new ApplicationModel();
+                ApplicationController controller = new ApplicationController(model);
+                controller.showGui();
+            }
+        });
+    }
 }

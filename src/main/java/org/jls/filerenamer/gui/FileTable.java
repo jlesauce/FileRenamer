@@ -27,48 +27,36 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 
-/**
- * Table permettant d'afficher une liste de fichiers.
- * 
- * @author AwaX
- * @created 27 oct. 2014
- * @version 1.0
- */
 public class FileTable extends JTable {
 
-	private static final long serialVersionUID = -201917568525483217L;
+    private static final long serialVersionUID = 5790755274612372085L;
 
-	private final FileTableModel tableModel;
+    private final FileTableModel tableModel;
 
-	/**
-	 * Permet d'instancier une table.
-	 * 
-	 * @param tableModel
-	 *            Modèle de données associé à la table.
-	 */
-	public FileTable (final FileTableModel tableModel) {
-		super();
-		this.tableModel = tableModel;
-		setModel(tableModel);
-		setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		setAutoCreateRowSorter(true);
-		setShowVerticalLines(false);
-		getSelectionModel().addListSelectionListener(this);
-	}
+    public FileTable(final FileTableModel tableModel) {
+        super();
+        this.tableModel = tableModel;
+        setModel(tableModel);
+        configure();
+    }
 
-	/**
-	 * Permet de mettre à jour les données affichées par la table.
-	 */
-	public void update () {
-		this.tableModel.fireTableDataChanged();
-	}
+    private void configure () {
+        setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        setAutoCreateRowSorter(true);
+        setShowVerticalLines(false);
+        getSelectionModel().addListSelectionListener(this);
+    }
 
-	@Override
-	public void valueChanged (ListSelectionEvent e) {
-		super.valueChanged(e);
-	}
+    public void updateTableData () {
+        this.tableModel.fireTableDataChanged();
+    }
 
-	public FileTableModel getTableModel () {
-		return this.tableModel;
-	}
+    @Override
+    public void valueChanged (final ListSelectionEvent selectionEvent) {
+        super.valueChanged(selectionEvent);
+    }
+
+    public FileTableModel getTableModel () {
+        return tableModel;
+    }
 }

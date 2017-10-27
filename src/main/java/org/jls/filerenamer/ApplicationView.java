@@ -38,7 +38,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.jls.filerenamer.gui.FileBrowser;
+import org.jls.filerenamer.gui.FileTree;
 import org.jls.filerenamer.gui.FileFiltersPanel;
 import org.jls.filerenamer.gui.FileTable;
 import org.jls.filerenamer.gui.FileTableModel;
@@ -65,7 +65,7 @@ public class ApplicationView extends JFrame implements Observer, TreeSelectionLi
     private final Logger logger;
     private final ResourceManager props;
 
-    private FileBrowser fileBrowser;
+    private FileTree fileBrowser;
     private FileTable fileTable;
     private FileFiltersPanel fileFiltersPanel;
     private RenamingPanel renamingPanel;
@@ -106,7 +106,7 @@ public class ApplicationView extends JFrame implements Observer, TreeSelectionLi
      * graphique.
      */
     private void createComponents () {
-        this.fileBrowser = new FileBrowser();
+        this.fileBrowser = new FileTree();
         this.fileTable = new FileTable(new FileTableModel(this.model.getCurrentFileSelection()));
         this.fileTable.getTableModel().setShowOnlyFiles(true);
         this.fileFiltersPanel = new FileFiltersPanel(this.controller);
@@ -154,7 +154,7 @@ public class ApplicationView extends JFrame implements Observer, TreeSelectionLi
         if (o instanceof ApplicationModel) {
             // Mise à jour de la sélection
             this.logger.debug("Updating current file selection");
-            this.fileTable.getTableModel().setData(this.model.getCurrentFileSelection());
+            this.fileTable.getTableModel().updateTableData(this.model.getCurrentFileSelection());
             this.tableAdjuster.adjustColumns();
         }
     }

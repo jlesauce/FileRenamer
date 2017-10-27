@@ -33,78 +33,87 @@ import javax.swing.filechooser.FileSystemView;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 
-/**
- * Classe permettant de modifier le rendu des éléments s'affichant dans l'arbre
- * d'exploration des dossiers.
- * 
- * @author AwaX
- * @created 24 oct. 2014
- * @version 1.0
- */
 public class FileBrowserCellRenderer extends DefaultTreeCellRenderer {
 
-	private static final long serialVersionUID = 2683418285034624925L;
+    private static final long serialVersionUID = -1685600857378020416L;
 
-	private final FileSystemView fileSystemView;
-	private final JLabel label;
-	private final Color bgSelectedColor;
-	private final Color fgSelectedColor;
-	private final Color bgNonSelectedColor;
-	private final Color fgNonSelectedColor;
+    private final FileSystemView fileSystemView;
+    private final JLabel label;
 
-	/**
-	 * Permet d'instancier un file renderer.
-	 * 
-	 * @param tree
-	 *            Arbre associé au renderer.
-	 */
-	public FileBrowserCellRenderer (final JTree tree) {
-		this.label = new JLabel();
-		this.label.setOpaque(true);
-		this.fileSystemView = FileSystemView.getFileSystemView();
-		this.bgSelectedColor = null;
-		this.fgSelectedColor = new JLabel().getForeground();
-		this.bgNonSelectedColor = null;
-		this.fgNonSelectedColor = new JLabel().getForeground();
-	}
+    private Color bgSelectedColor;
+    private Color fgSelectedColor;
+    private Color bgNonSelectedColor;
+    private Color fgNonSelectedColor;
 
-	@Override
-	public Component getTreeCellRendererComponent (final JTree tree, final Object value, final boolean sel,
-			final boolean expanded, final boolean leaf, final int row, final boolean hasFocus) {
-		DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
-		File file = (File) node.getUserObject();
-		this.label.setIcon(fileSystemView.getSystemIcon(file));
-		this.label.setText(fileSystemView.getSystemDisplayName(file));
-		this.label.setToolTipText(file.getPath());
-		if (sel) {
-			label.setOpaque(false);
-			label.setBackground(bgSelectedColor);
-			label.setForeground(fgSelectedColor);
-		} else {
-			label.setOpaque(false);
-			label.setBackground(bgNonSelectedColor);
-			label.setForeground(fgNonSelectedColor);
-		}
-		return label;
-	}
+    public FileBrowserCellRenderer(final JTree tree) {
+        label = new JLabel();
+        label.setOpaque(true);
+        fileSystemView = FileSystemView.getFileSystemView();
+        configureSelectionColors();
+    }
 
-	@Override
-	public Color getBackgroundSelectionColor () {
-		return this.bgSelectedColor;
-	}
+    private void configureSelectionColors () {
+        bgSelectedColor = null;
+        fgSelectedColor = new JLabel().getForeground();
+        bgNonSelectedColor = null;
+        fgNonSelectedColor = new JLabel().getForeground();
+    }
 
-	@Override
-	public Color getBackgroundNonSelectionColor () {
-		return this.bgNonSelectedColor;
-	}
+    @Override
+    public Component getTreeCellRendererComponent (final JTree tree,
+                                                   final Object value,
+                                                   final boolean isSelected,
+                                                   final boolean isExpanded,
+                                                   final boolean isLeaf,
+                                                   final int rowIndex,
+                                                   final boolean hasFocus) {
+        DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
+        File file = (File) node.getUserObject();
 
-	@Override
-	public Color getTextSelectionColor () {
-		return this.fgSelectedColor;
-	}
+        updateFileNodeLabel(file);
+        if (isSelected) {
+            setFileNodeSelected();
+        } else {
+            setFileNodeNonSelected();
+        }
 
-	@Override
-	public Color getTextNonSelectionColor () {
-		return this.fgNonSelectedColor;
-	}
+        return label;
+    }
+
+    private void updateFileNodeLabel (final File file) {
+        label.setIcon(fileSystemView.getSystemIcon(file));
+        label.setText(fileSystemView.getSystemDisplayName(file));
+        label.setToolTipText(file.getPath());
+        label.setOpaque(false);
+    }
+
+    private void setFileNodeSelected () {
+        label.setBackground(getBackgroundSelectionColor());
+        label.setForeground(getTextSelectionColor());
+    }
+
+    private void setFileNodeNonSelected () {
+        label.setBackground(getBackgroundNonSelectionColor());
+        label.setForeground(getTextNonSelectionColor());
+    }
+
+    @Override
+    public Color getBackgroundSelectionColor () {
+        return bgSelectedColor;
+    }
+
+    @Override
+    public Color getBackgroundNonSelectionColor () {
+        return bgNonSelectedColor;
+    }
+
+    @Override
+    public Color getTextSelectionColor () {
+        return fgSelectedColor;
+    }
+
+    @Override
+    public Color getTextNonSelectionColor () {
+        return fgNonSelectedColor;
+    }
 }

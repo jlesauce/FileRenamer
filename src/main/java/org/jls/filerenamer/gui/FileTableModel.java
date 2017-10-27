@@ -23,7 +23,6 @@
  *******************************************************************************/
 package org.jls.filerenamer.gui;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import javax.swing.Icon;
@@ -34,172 +33,114 @@ import org.jls.filerenamer.util.FileInfo;
 
 public class FileTableModel extends AbstractTableModel {
 
-	private static final long serialVersionUID = -2244804522248015803L;
+    private static final long serialVersionUID = 2054550595249194702L;
 
-	private final String[] columns = {"Icon", "Ext", "Name", "Final Name", "Path" };
-	private final ArrayList<FileInfo> files;
+    private final String[] columns = { "Icon", "Ext", "Name", "Final Name", "Path" };
+    private final ArrayList<FileInfo> fileInfoList;
 
-	private boolean showOnlyDirectories;
-	private boolean showOnlyFiles;
+    private boolean showOnlyDirectories;
+    private boolean showOnlyFiles;
 
-	/**
-	 * Permet d'instancier un modèle de données.
-	 * 
-	 * @param files
-	 *            Liste des fichiers affichés par la table.
-	 */
-	public FileTableModel (final ArrayList<FileInfo> files) {
-		super();
-		this.files = files;
-		this.showOnlyDirectories = false;
-		this.showOnlyFiles = false;
-	}
+    public FileTableModel(final ArrayList<FileInfo> files) {
+        super();
+        fileInfoList = files;
+        showOnlyDirectories = false;
+        showOnlyFiles = false;
+    }
 
-	/**
-	 * Permet de mettre à jour la table.
-	 * 
-	 * @param files
-	 *            Liste des fichiers à afficher, si <code>null</code> est
-	 *            spécifié alors la table est simplement vidée.
-	 */
-	public void setData (final File[] data) {
-		this.files.clear();
-		if (files != null) {
-			for (File file : data) {
-				FileInfo fileInfo = new FileInfo(file);
-				if (file.isDirectory()) {
-					if (!this.showOnlyFiles) {
-						this.files.add(fileInfo);
-					}
-				} else {
-					if (!this.showOnlyDirectories) {
-						this.files.add(fileInfo);
-					}
-				}
-			}
-		}
-		fireTableDataChanged();
-	}
+    public void updateTableData (final ArrayList<FileInfo> files) {
+        fileInfoList.clear();
+        addFilesToTable(files);
+        fireTableDataChanged();
+    }
 
-	/**
-	 * Permet de mettre à jour la table.
-	 * 
-	 * @param files
-	 *            Liste des fichiers à afficher, si <code>null</code> est
-	 *            spécifié alors la table est simplement vidée.
-	 */
-	public void setData (final ArrayList<FileInfo> data) {
-		this.files.clear();
-		if (files != null) {
-			for (FileInfo file : data) {
-				if (file.getFile().isDirectory()) {
-					if (!this.showOnlyFiles) {
-						this.files.add(file);
-					}
-				} else {
-					if (!this.showOnlyDirectories) {
-						this.files.add(file);
-					}
-				}
-			}
-		}
-		fireTableDataChanged();
-	}
+    private void addFilesToTable (final ArrayList<FileInfo> files) {
+        for (FileInfo file : files) {
+            if (file.getFile().isDirectory() && !showOnlyFiles) {
+                fileInfoList.add(file);
+            } else if (!showOnlyDirectories) {
+                fileInfoList.add(file);
+            }
+        }
+    }
 
-	/**
-	 * Permet de spécifier au modèle de n'afficher que les dossiers. Par défaut
-	 * le modèle affiche tous les fichiers.
-	 * 
-	 * @param showOnlyDirectories
-	 *            <code>true</code> pour afficher uniquement les dossiers,
-	 *            <code>false</code> pour tout afficher.
-	 */
-	public void setShowOnlyDirectories (boolean showOnlyDirectories) {
-		this.showOnlyDirectories = showOnlyDirectories;
-		this.showOnlyFiles = !showOnlyDirectories;
-	}
+    public void setShowOnlyDirectories (final boolean onlyDirectories) {
+        showOnlyDirectories = onlyDirectories;
+        showOnlyFiles = !onlyDirectories;
+    }
 
-	/**
-	 * Permet de spécifier au modèle de n'afficher que les fichiers. Par défaut
-	 * le modèle affiche tous les fichiers.
-	 * 
-	 * @param showOnlyFiles
-	 *            <code>true</code> pour afficher uniquement les fichiers,
-	 *            <code>false</code> pour tout afficher.
-	 */
-	public void setShowOnlyFiles (boolean showOnlyFiles) {
-		this.showOnlyFiles = showOnlyFiles;
-		this.showOnlyDirectories = !showOnlyFiles;
-	}
+    public void setShowOnlyFiles (final boolean onlyFiles) {
+        showOnlyFiles = onlyFiles;
+        showOnlyDirectories = !onlyFiles;
+    }
 
-	@Override
-	public int getRowCount () {
-		return this.files != null ? this.files.size() : 0;
-	}
+    @Override
+    public int getRowCount () {
+        return fileInfoList != null ? fileInfoList.size() : 0;
+    }
 
-	@Override
-	public int getColumnCount () {
-		return this.columns != null ? this.columns.length : 0;
-	}
+    @Override
+    public int getColumnCount () {
+        return columns != null ? columns.length : 0;
+    }
 
-	@Override
-	public Object getValueAt (int rowIndex, int columnIndex) {
-		if (rowIndex >= 0 && rowIndex < getRowCount() && columnIndex >= 0 && columnIndex < getColumnCount()) {
-			FileInfo file = this.files.get(rowIndex);
-			switch (columnIndex) {
-				case 0:
-					return file.getIcon();
-				case 1:
-					return FilenameUtils.getExtension(file.getFile().getName());
-				case 2:
-					return file.getDisplayName();
-				case 3:
-					return file.getNewName();
-				case 4:
-					return file.getPath();
-				default:
-					return null;
-			}
-		}
-		return null;
-	}
+    @Override
+    public Object getValueAt (final int rowIndex, final int columnIndex) {
+        if (rowIndex >= 0 && rowIndex < getRowCount() && columnIndex >= 0 && columnIndex < getColumnCount()) {
+            FileInfo file = fileInfoList.get(rowIndex);
+            switch (columnIndex) {
+                case 0:
+                    return file.getIcon();
+                case 1:
+                    return FilenameUtils.getExtension(file.getFile().getName());
+                case 2:
+                    return file.getDisplayName();
+                case 3:
+                    return file.getNewName();
+                case 4:
+                    return file.getPath();
+                default:
+                    return null;
+            }
+        }
+        return null;
+    }
 
-	@Override
-	public Class<?> getColumnClass (int columnIndex) {
-		if (columnIndex >= 0 && columnIndex < getColumnCount()) {
-			switch (columnIndex) {
-				case 0:
-					return Icon.class;
-				case 1:
-					return String.class;
-				case 2:
-					return String.class;
-				case 3:
-					return String.class;
-				case 4:
-					return String.class;
-				default:
-					return null;
-			}
-		}
-		return String.class;
-	}
+    @Override
+    public Class<?> getColumnClass (final int columnIndex) {
+        if (columnIndex >= 0 && columnIndex < getColumnCount()) {
+            switch (columnIndex) {
+                case 0:
+                    return Icon.class;
+                case 1:
+                    return String.class;
+                case 2:
+                    return String.class;
+                case 3:
+                    return String.class;
+                case 4:
+                    return String.class;
+                default:
+                    return null;
+            }
+        }
+        return String.class;
+    }
 
-	@Override
-	public String getColumnName (int column) {
-		if (column >= 0 && column < getColumnCount()) {
-			return this.columns[column];
-		}
-		return null;
-	}
+    @Override
+    public String getColumnName (final int column) {
+        if (column >= 0 && column < getColumnCount()) {
+            return columns[column];
+        }
+        return null;
+    }
 
-	@Override
-	public boolean isCellEditable (int rowIndex, int columnIndex) {
-		return false;
-	}
+    @Override
+    public boolean isCellEditable (final int rowIndex, final int columnIndex) {
+        return false;
+    }
 
-	@Override
-	public void setValueAt (Object aValue, int rowIndex, int columnIndex) {
-		// Nothing
-	}
+    @Override
+    public void setValueAt (final Object aValue, final int rowIndex, final int columnIndex) {
+    }
 }

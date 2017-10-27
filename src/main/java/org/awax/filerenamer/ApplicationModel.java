@@ -32,13 +32,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.awax.filerenamer.util.FileInfo;
 
-/**
- * Modèle de données de l'application.
- *
- * @author AwaX
- * @created 23 oct. 2014
- * @version 1.0
- */
 public class ApplicationModel extends Observable {
 
     private final Logger logger;
@@ -47,61 +40,51 @@ public class ApplicationModel extends Observable {
     private ArrayList<FileInfo> fileSelection;
     private ArrayList<FileInfo> currentFileSelection;
 
-    /**
-     * Permet d'instancier le modèle de données de l'application par défaut.
-     */
     public ApplicationModel() {
-        this.logger = LogManager.getLogger();
-        this.appName = "File Renamer";
-        this.fileSystemView = FileSystemView.getFileSystemView();
-        this.fileSelection = new ArrayList<>();
-        this.currentFileSelection = new ArrayList<>();
+        logger = LogManager.getLogger();
+        appName = "File Renamer";
+        fileSystemView = FileSystemView.getFileSystemView();
+        fileSelection = new ArrayList<>();
+        currentFileSelection = new ArrayList<>();
     }
 
-    /**
-     * Permet de notifier tous les abonnés d'une modification du modèle de données.
-     *
-     * @param obj
-     *            (Optionnel) Il est possible de préciser un objet à transmettre aux
-     *            abonnés.
-     */
     public void notifyChanged (final Object... obj) {
-        this.setChanged();
+        setChanged();
         if (obj == null || obj.length == 0) {
-            this.notifyObservers();
+            notifyObservers();
         } else if (obj.length == 1) {
-            this.notifyObservers(obj);
+            notifyObservers(obj);
         } else {
             throw new IllegalArgumentException("Only one argument accepted");
         }
-        this.clearChanged();
+        clearChanged();
     }
 
     public String getAppName () {
-        return this.appName;
+        return appName;
     }
 
     public FileSystemView getFileSystemView () {
-        return this.fileSystemView;
+        return fileSystemView;
     }
 
     public ArrayList<FileInfo> getFileSelection () {
-        return this.fileSelection;
+        return fileSelection;
     }
 
     public void setFileSelection (final ArrayList<FileInfo> fileSelection) {
-        this.logger.debug("Updating file selection");
+        logger.debug("Updating file selection");
         this.fileSelection = fileSelection;
         setCurrentFileSelection(fileSelection);
     }
 
     public ArrayList<FileInfo> getCurrentFileSelection () {
-        return this.currentFileSelection;
+        return currentFileSelection;
     }
 
     public void setCurrentFileSelection (final ArrayList<FileInfo> fileSelection) {
-        this.logger.debug("Updating current file selection");
-        this.currentFileSelection = fileSelection;
+        logger.debug("Updating current file selection");
+        currentFileSelection = fileSelection;
         notifyChanged(fileSelection);
     }
 }

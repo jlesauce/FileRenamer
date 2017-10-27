@@ -23,8 +23,10 @@
     SOFTWARE.
  -->
 
-<!-- Configuration Resources -->
+<!DOCTYPE xml>
 <configuration>
+	<properties fileName="common.properties" config-name="common" throwExceptionOnMissing="true" />
 	<properties fileName="mainPanel.properties" config-name="mainPanel" throwExceptionOnMissing="true" />
 	<properties fileName="fileFiltersPanel.properties" config-name="fileFiltersPanel" throwExceptionOnMissing="true" />
+	<properties fileName="addVarDialog.properties" config-name="addVarDialog" throwExceptionOnMissing="true" />
 </configuration>

@@ -241,14 +241,14 @@ public class RenamingPanel extends JPanel implements ActionListener {
             }
             // Add Tag
             else if (this.btnAddVar.equals(btn)) {
-                AddVarDialog dialog = new AddVarDialog();
+                AddVariableDialog dialog = new AddVariableDialog();
                 dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
                 dialog.setModal(true);
                 dialog.pack();
                 dialog.setLocationRelativeTo(this.controller.getView());
                 dialog.setVisible(true);
-                if (dialog.getReturnOption() == AddVarDialog.APPROVE_OPTION) {
-                    insertVariable(dialog.getVarType(), dialog.getValue(), dialog.getNbDigits());
+                if (dialog.getDialogReturnOption() == AddVariableDialog.APPROVE_OPTION) {
+                    insertVariable(dialog.getVariableType(), dialog.getVariableInitialValue(), dialog.getVariableNbOfDigits());
                 }
             }
             // Clear

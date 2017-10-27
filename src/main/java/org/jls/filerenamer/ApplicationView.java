@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
-package org.awax.filerenamer;
+package org.jls.filerenamer;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -38,14 +38,14 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.awax.filerenamer.gui.FileBrowser;
-import org.awax.filerenamer.gui.FileFiltersPanel;
-import org.awax.filerenamer.gui.FileTable;
-import org.awax.filerenamer.gui.FileTableModel;
-import org.awax.filerenamer.gui.RenamingPanel;
-import org.awax.filerenamer.util.FileInfo;
-import org.awax.filerenamer.util.ResourceManager;
-import org.awax.filerenamer.util.TableColumnAdjuster;
+import org.jls.filerenamer.gui.FileBrowser;
+import org.jls.filerenamer.gui.FileFiltersPanel;
+import org.jls.filerenamer.gui.FileTable;
+import org.jls.filerenamer.gui.FileTableModel;
+import org.jls.filerenamer.gui.RenamingPanel;
+import org.jls.filerenamer.util.FileInfo;
+import org.jls.filerenamer.util.ResourceManager;
+import org.jls.filerenamer.util.TableColumnAdjuster;
 
 import net.miginfocom.swing.MigLayout;
 

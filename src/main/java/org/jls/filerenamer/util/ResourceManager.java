@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
-package org.awax.filerenamer.util;
+package org.jls.filerenamer.util;
 
 import java.awt.Color;
 import java.io.File;
@@ -35,7 +35,7 @@ import org.apache.commons.configuration.CombinedConfiguration;
 import org.apache.commons.configuration.DefaultConfigurationBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.awax.filerenamer.FileRenamer;
+import org.jls.filerenamer.FileRenamer;
 
 public class ResourceManager {
 

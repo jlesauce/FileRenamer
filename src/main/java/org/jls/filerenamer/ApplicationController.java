@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
-package org.awax.filerenamer;
+package org.jls.filerenamer;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -32,10 +32,10 @@ import java.util.regex.Pattern;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.awax.filerenamer.util.FileFilter;
-import org.awax.filerenamer.util.FileInfo;
-import org.awax.filerenamer.util.MalformedTagException;
-import org.awax.filerenamer.util.Tag;
+import org.jls.filerenamer.util.FileFilter;
+import org.jls.filerenamer.util.FileInfo;
+import org.jls.filerenamer.util.MalformedTagException;
+import org.jls.filerenamer.util.Tag;
 
 /**
  * Contrôleur de l'application.

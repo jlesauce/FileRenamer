@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
-package org.awax.filerenamer.gui;
+package org.jls.filerenamer.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -36,10 +36,10 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.awax.filerenamer.ApplicationController;
-import org.awax.filerenamer.util.FileFilter;
-import org.awax.filerenamer.util.InvalidFilterException;
-import org.awax.filerenamer.util.ResourceManager;
+import org.jls.filerenamer.ApplicationController;
+import org.jls.filerenamer.util.FileFilter;
+import org.jls.filerenamer.util.InvalidFilterException;
+import org.jls.filerenamer.util.ResourceManager;
 
 import net.miginfocom.swing.MigLayout;
 

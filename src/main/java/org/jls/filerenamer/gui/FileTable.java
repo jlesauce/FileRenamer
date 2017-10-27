@@ -21,26 +21,54 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
-package org.awax.filerenamer.util;
+package org.jls.filerenamer.gui;
+
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
 
 /**
- * Permet de représenter les différents tags disponibles pour renommer les
- * fichiers.
+ * Table permettant d'afficher une liste de fichiers.
  * 
  * @author AwaX
- * @created 30 oct. 2014
+ * @created 27 oct. 2014
  * @version 1.0
  */
-public enum Tag {
+public class FileTable extends JTable {
 
-	DATE, YEAR, YEAR_SMALL, DAY, MONTH, DIR_NAME, FILE_NAME, IMPORTED_NAME;
+	private static final long serialVersionUID = -201917568525483217L;
+
+	private final FileTableModel tableModel;
 
 	/**
-	 * Renvoie la chaîne associée à ce tag.
+	 * Permet d'instancier une table.
 	 * 
-	 * @return Chaîne associée à ce tag.
+	 * @param tableModel
+	 *            Modèle de données associé à la table.
 	 */
-	public String toTagString () {
-		return "{" + name().toLowerCase() + "}";
+	public FileTable (final FileTableModel tableModel) {
+		super();
+		this.tableModel = tableModel;
+		setModel(tableModel);
+		setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		setAutoCreateRowSorter(true);
+		setShowVerticalLines(false);
+		getSelectionModel().addListSelectionListener(this);
+	}
+
+	/**
+	 * Permet de mettre à jour les données affichées par la table.
+	 */
+	public void update () {
+		this.tableModel.fireTableDataChanged();
+	}
+
+	@Override
+	public void valueChanged (ListSelectionEvent e) {
+		super.valueChanged(e);
+	}
+
+	public FileTableModel getTableModel () {
+		return this.tableModel;
 	}
 }

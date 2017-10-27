@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
-package org.awax.filerenamer.gui;
+package org.jls.filerenamer.gui;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ import javax.swing.Icon;
 import javax.swing.table.AbstractTableModel;
 
 import org.apache.commons.io.FilenameUtils;
-import org.awax.filerenamer.util.FileInfo;
+import org.jls.filerenamer.util.FileInfo;
 
 public class FileTableModel extends AbstractTableModel {
 

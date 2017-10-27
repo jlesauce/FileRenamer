@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
-package org.awax.filerenamer;
+package org.jls.filerenamer;
 
 import java.util.ArrayList;
 import java.util.Observable;
@@ -30,7 +30,7 @@ import javax.swing.filechooser.FileSystemView;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.awax.filerenamer.util.FileInfo;
+import org.jls.filerenamer.util.FileInfo;
 
 public class ApplicationModel extends Observable {
 

@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
-package org.awax.filerenamer.util;
+package org.jls.filerenamer.util;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;

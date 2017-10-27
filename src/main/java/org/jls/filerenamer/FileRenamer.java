@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
-package org.awax.filerenamer;
+package org.jls.filerenamer;
 
 import java.io.File;
 import java.net.URL;
@@ -31,7 +31,7 @@ import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
 import org.apache.logging.log4j.LogManager;
-import org.awax.filerenamer.util.ResourceManager;
+import org.jls.filerenamer.util.ResourceManager;
 
 public class FileRenamer {
 

@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
-package org.awax.filerenamer.util.spinner.letterspinner;
+package org.jls.filerenamer.util.spinner.letterspinner;
 
 import java.util.ArrayList;
 import java.util.List;

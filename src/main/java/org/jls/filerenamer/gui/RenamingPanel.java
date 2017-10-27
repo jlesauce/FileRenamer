@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
-package org.awax.filerenamer.gui;
+package org.jls.filerenamer.gui;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -41,9 +41,9 @@ import javax.swing.SwingUtilities;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.awax.filerenamer.ApplicationController;
-import org.awax.filerenamer.util.MalformedTagException;
-import org.awax.filerenamer.util.Tag;
+import org.jls.filerenamer.ApplicationController;
+import org.jls.filerenamer.util.MalformedTagException;
+import org.jls.filerenamer.util.Tag;
 
 import net.miginfocom.swing.MigLayout;
 

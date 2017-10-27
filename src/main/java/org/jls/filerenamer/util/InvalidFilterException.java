@@ -21,39 +21,40 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
-package org.awax.filerenamer.util;
+package org.jls.filerenamer.util;
 
 /**
- * Exception lancée si une chaîne contenant un tag est mal construite.
+ * Exception lancée par la classe {@link FileFilter} lorsqu'un des paramètres de
+ * filtrage a été mal configuré.
  * 
  * @author AwaX
  * @created 28 oct. 2014
  * @version 1.0
  */
-public class MalformedTagException extends Exception {
+public class InvalidFilterException extends Exception {
 
 	private static final long serialVersionUID = 53561047896779373L;
 
 	/**
-	 * Permet d'instancier une {@link MalformedTagException} sans description.
+	 * Permet d'instancier une {@link InvalidFilterException} sans description.
 	 */
-	public MalformedTagException () {
+	public InvalidFilterException () {
 		super();
 	}
 
 	/**
-	 * Permet d'instancier une {@link MalformedTagException} en précisant une
+	 * Permet d'instancier une {@link InvalidFilterException} en précisant une
 	 * description de l'erreur.
 	 * 
 	 * @param msg
 	 *            Description de l'erreur.
 	 */
-	public MalformedTagException (final String msg) {
+	public InvalidFilterException (final String msg) {
 		super(msg);
 	}
 
 	/**
-	 * Permet d'instancier une {@link MalformedTagException} en précisant la
+	 * Permet d'instancier une {@link InvalidFilterException} en précisant la
 	 * cause de l'erreur.
 	 * 
 	 * @param cause
@@ -62,12 +63,12 @@ public class MalformedTagException extends Exception {
 	 *            autorisée, et permet d'indiquer que la cause est inconnue ou
 	 *            inexistante).
 	 */
-	public MalformedTagException (final Throwable cause) {
+	public InvalidFilterException (final Throwable cause) {
 		super(cause);
 	}
 
 	/**
-	 * Permet d'instancier une {@link MalformedTagException} en précisant la
+	 * Permet d'instancier une {@link InvalidFilterException} en précisant la
 	 * cause de l'erreur et sa description.
 	 * 
 	 * @param msg
@@ -78,7 +79,7 @@ public class MalformedTagException extends Exception {
 	 *            autorisée, et permet d'indiquer que la cause est inconnue ou
 	 *            inexistante).
 	 */
-	public MalformedTagException (final String msg, final Throwable cause) {
+	public InvalidFilterException (final String msg, final Throwable cause) {
 		super(msg, cause);
 	}
 }

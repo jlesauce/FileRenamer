@@ -31,44 +31,15 @@ import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
 import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.awax.filerenamer.util.ResourceManager;
 
 public class FileRenamer {
 
-    public static void main (final String[] args) {
-        /*
-         * Configure the logger
-         */
-        String log4jKey = "log4j.configurationFile";
-        // If no configuration is configured
-        if (System.getProperty(log4jKey) == null) {
-            // Load the default configuration
-            String path = ResourceManager.LOG4J_FILE;
-            URL url = Thread.currentThread().getContextClassLoader().getResource(path);
-            if (url == null) {
-                path = ResourceManager.RESOURCES_DIR + File.separator + ResourceManager.LOG4J_FILE;
-                url = Thread.currentThread().getContextClassLoader().getResource(path);
-            }
-            System.setProperty(log4jKey, url.getFile());
-        }
-        final Logger logger = LogManager.getLogger();
-        logger.info("log4j configuration file set : {}", System.getProperty(log4jKey));
+    private static final String LOG4J_SYSTEM_PROPERTY_KEY = "log4j.configurationFile";
 
-        /*
-         * Look & Feel Nimbus
-         */
-        try {
-            for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    UIManager.setLookAndFeel(info.getClassName());
-                    logger.info("Setting Nimbus look & feel");
-                    break;
-                }
-            }
-        } catch (Exception e) {
-            logger.warn("Cannot set java look and feel");
-        }
+    public static void main (final String[] args) {
+        configureLogger();
+        setNimbusLookAndFeel();
 
         SwingUtilities.invokeLater(new Runnable() {
 
@@ -80,4 +51,44 @@ public class FileRenamer {
             }
         });
     }
+
+    private static void configureLogger () {
+        if (!isLoggerConfigurationFileFound()) {
+            setLog4jConfigurationSystemProperty();
+        }
+        LogManager.getLogger().info("log4j configuration file set : {}", System.getProperty(LOG4J_SYSTEM_PROPERTY_KEY));
+    }
+
+    private static boolean isLoggerConfigurationFileFound () {
+        return System.getProperty(LOG4J_SYSTEM_PROPERTY_KEY) != null;
+    }
+
+    private static void setLog4jConfigurationSystemProperty () {
+        URL url = getLog4jConfigurationFileUrl();
+        System.setProperty(LOG4J_SYSTEM_PROPERTY_KEY, url.getFile());
+    }
+
+    private static URL getLog4jConfigurationFileUrl () {
+        String path = ResourceManager.LOG4J_FILE;
+        URL url = Thread.currentThread().getContextClassLoader().getResource(path);
+        if (url == null) {
+            path = ResourceManager.RESOURCES_DIR + File.separator + ResourceManager.LOG4J_FILE;
+            url = Thread.currentThread().getContextClassLoader().getResource(path);
+        }
+        return url;
+    }
+
+    private static void setNimbusLookAndFeel () {
+        try {
+            for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            LogManager.getLogger().warn("Cannot set java look and feel");
+        }
+    }
+
 }

@@ -31,7 +31,7 @@
     <groupId>org.jls</groupId>
     <artifactId>filerenamer</artifactId>
     <name>File Renamer</name>
-    <version>0.1.0</version>
+    <version>1.0</version>
     <packaging>jar</packaging>
     <url>https://github.com/Awax56/FileRenamer</url>
     <description>Tool to rename files in a bulk easily.</description>
@@ -172,6 +172,7 @@
                             <goal>single</goal>
                         </goals>
                         <configuration>
+                            <outputDirectory>bin</outputDirectory>
                             <archive>
                                 <manifest>
                                     <addClasspath>true</addClasspath>

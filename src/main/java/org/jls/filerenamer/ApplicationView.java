@@ -23,35 +23,24 @@
  */
 package org.jls.filerenamer;
 
+import net.miginfocom.swing.MigLayout;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.jls.filerenamer.gui.*;
+import org.jls.filerenamer.util.FileInfo;
+import org.jls.filerenamer.util.ResourceManager;
+import org.jls.filerenamer.util.TableColumnAdjuster;
+
+import javax.swing.*;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
+import javax.swing.tree.DefaultMutableTreeNode;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
-import javax.swing.JFrame;
-import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
-import javax.swing.JTabbedPane;
-import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
-import javax.swing.tree.DefaultMutableTreeNode;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.jls.filerenamer.gui.FileTree;
-import org.jls.filerenamer.gui.FileFiltersPanel;
-import org.jls.filerenamer.gui.FileTable;
-import org.jls.filerenamer.gui.FileTableModel;
-import org.jls.filerenamer.gui.RenamingPanel;
-import org.jls.filerenamer.util.FileInfo;
-import org.jls.filerenamer.util.ResourceManager;
-import org.jls.filerenamer.util.TableColumnAdjuster;
-
-import net.miginfocom.swing.MigLayout;
-
 public class ApplicationView extends JFrame implements Observer, TreeSelectionListener {
-
-    private static final long serialVersionUID = 807507002677441420L;
 
     private final ApplicationModel model;
     private final ApplicationController controller;
@@ -101,7 +90,7 @@ public class ApplicationView extends JFrame implements Observer, TreeSelectionLi
         JScrollPane browserScroll = new JScrollPane(this.fileBrowser.getJTree());
         JScrollPane tableScroll = new JScrollPane(this.fileTable);
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, false, browserScroll, tableScroll);
-        splitPane.setResizeWeight(0.0);
+        splitPane.setResizeWeight(0.3);
         splitPane.setDividerSize(splitPane.getDividerSize() / 2);
 
         // Bottom panels
@@ -122,7 +111,6 @@ public class ApplicationView extends JFrame implements Observer, TreeSelectionLi
     @Override
     public void update(final Observable o, final Object arg) {
         if (o instanceof ApplicationModel) {
-            // Mise à jour de la sélection
             this.logger.debug("Updating current file selection");
             this.fileTable.getTableModel().updateTableData(this.model.getCurrentFileSelection());
             this.tableAdjuster.adjustColumns();
@@ -130,19 +118,27 @@ public class ApplicationView extends JFrame implements Observer, TreeSelectionLi
     }
 
     @Override
-    public void valueChanged(final TreeSelectionEvent e) {
-        // File Browser
-        if (e.getSource().equals(this.fileBrowser.getJTree())) {
-            DefaultMutableTreeNode node = (DefaultMutableTreeNode) e.getPath().getLastPathComponent();
-            File nodeFile = (File) node.getUserObject();
-            if (nodeFile.isDirectory()) {
-                File[] files = this.model.getFileSystemView().getFiles(nodeFile, true);
-                ArrayList<FileInfo> fileInfoList = new ArrayList<>();
-                for (File f : files) {
-                    fileInfoList.add(new FileInfo(f));
-                }
-                this.model.setFileSelection(fileInfoList);
-            }
+    public void valueChanged(final TreeSelectionEvent treeSelectionEvent) {
+        if (treeSelectionEvent.getSource().equals(this.fileBrowser.getJTree())) {
+            onFileBrowserValueChanged(treeSelectionEvent);
         }
+    }
+
+    private void onFileBrowserValueChanged(final TreeSelectionEvent e) {
+        DefaultMutableTreeNode node = (DefaultMutableTreeNode) e.getPath().getLastPathComponent();
+        File nodeFile = (File) node.getUserObject();
+
+        if (nodeFile.isDirectory()) {
+            updateFileSelection(nodeFile);
+        }
+    }
+
+    private void updateFileSelection(final File directory) {
+        File[] files = this.model.getFileSystemView().getFiles(directory, true);
+        ArrayList<FileInfo> fileInfoList = new ArrayList<>();
+        for (File file : files) {
+            fileInfoList.add(new FileInfo(file));
+        }
+        this.model.setFileSelection(fileInfoList);
     }
 }

@@ -25,6 +25,7 @@ package org.jls.filerenamer.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Objects;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -71,7 +72,7 @@ public class AddVariableDialog extends JDialog implements ActionListener {
         this.lblType = new JLabel(props.getString("addVarDialog.label.type"));
         this.lblNbDigits = new JLabel(props.getString("addVarDialog.label.nbDigits"));
         this.lblInitialValue = new JLabel(props.getString("addVarDialog.label.initialValue"));
-        this.boxType = new JComboBox<String>(getVariableTypes());
+        this.boxType = new JComboBox<>(getVariableTypes());
         this.spNbDigits = new JSpinner(new SpinnerNumberModel(1, 1, 4, 1));
         this.spInitialValue = new JSpinner(new SpinnerNumberModel(0, 0, (int) (Math.pow(10, 4) - 1), 1));
         this.btnOk = new JButton(props.getString("common.label.ok"));
@@ -79,8 +80,7 @@ public class AddVariableDialog extends JDialog implements ActionListener {
     }
 
     private String[] getVariableTypes() {
-        String[] types = {"Integer", "Letter"};
-        return types;
+        return new String[]{"Integer", "Letter"};
     }
 
     private void addGuiComponents() {
@@ -134,7 +134,7 @@ public class AddVariableDialog extends JDialog implements ActionListener {
     }
 
     public String getVariableType() {
-        return this.boxType.getSelectedItem().toString();
+        return Objects.requireNonNull(this.boxType.getSelectedItem()).toString();
     }
 
     public int getDialogReturnOption() {

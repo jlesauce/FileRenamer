@@ -72,10 +72,6 @@ public class FileInfo {
         return FilenameUtils.getExtension(this.file.getName());
     }
 
-    public long getLength() {
-        return this.file.length();
-    }
-
     public String getNewName() {
         return this.newName;
     }

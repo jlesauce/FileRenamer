@@ -76,13 +76,7 @@ public class RenamingPanel extends JPanel implements ActionListener {
     }
 
     public void pop(final String title, final String msg, final int type) {
-        SwingUtilities.invokeLater(new Runnable() {
-
-            @Override
-            public void run() {
-                JOptionPane.showMessageDialog(controller.getView(), msg, title, type);
-            }
-        });
+        SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog(controller.getView(), msg, title, type));
     }
 
     private void createComponents() {
@@ -174,7 +168,7 @@ public class RenamingPanel extends JPanel implements ActionListener {
                 } else if (caret == old.length()) {
                     this.tfPattern.setText(old + tagStr);
                 } else if (caret >= 0 && caret < old.length()) {
-                    String newStr = old.substring(0, caret) + tagStr + old.substring(caret, old.length());
+                    String newStr = old.substring(0, caret) + tagStr + old.substring(caret);
                     this.tfPattern.setText(newStr);
                 }
                 this.tfPattern.requestFocus();

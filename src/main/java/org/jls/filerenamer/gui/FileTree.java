@@ -103,7 +103,7 @@ public class FileTree implements TreeSelectionListener {
 
     private void configureTree() {
         this.tree.setRootVisible(false);
-        this.tree.setCellRenderer(new FileBrowserCellRenderer(this.tree));
+        this.tree.setCellRenderer(new FileBrowserCellRenderer());
     }
 
     private void addGuiListeners() {

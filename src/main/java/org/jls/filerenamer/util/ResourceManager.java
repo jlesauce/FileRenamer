@@ -45,17 +45,15 @@ public class ResourceManager {
     public static final String RESOURCES_PATH = FileRenamer.class.getProtectionDomain().getCodeSource()
             .getLocation().getPath() + RESOURCES_DIR;
     public static final String IMG_PATH = "img";
-    public static final String PROPERTIES_PATH = "properties";
 
     public static final String LOG4J_FILE = "log4j2.xml";
 
     private static ResourceManager INSTANCE = null;
 
-    private final Logger logger;
     private CombinedConfiguration configuration;
 
     private ResourceManager() {
-        this.logger = LogManager.getLogger();
+        Logger logger = LogManager.getLogger();
         DefaultConfigurationBuilder builder = new DefaultConfigurationBuilder();
         builder.setConfigurationBasePath(RESOURCES_PATH);
         builder.setBasePath(RESOURCES_PATH);
@@ -64,19 +62,19 @@ public class ResourceManager {
             builder.setEncoding("UTF8");
             this.configuration = builder.getConfiguration(true);
         } catch (Exception e) {
-            this.logger.fatal("An error occured while building application properties", e);
+            logger.fatal("An error occured while building application properties", e);
             Runtime.getRuntime().exit(-1);
         }
     }
 
-    public final static ResourceManager getInstance() {
+    public static ResourceManager getInstance() {
         if (ResourceManager.INSTANCE == null) {
             ResourceManager.INSTANCE = new ResourceManager();
         }
         return ResourceManager.INSTANCE;
     }
 
-    public final static URL getResource(final String name) throws FileNotFoundException {
+    public static URL getResource(final String name) throws FileNotFoundException {
         URL url = Thread.currentThread().getContextClassLoader().getResource(name);
         if (url == null) {
             url = Thread.currentThread().getContextClassLoader().getResource(RESOURCES_DIR + File.separator + name);
@@ -87,11 +85,11 @@ public class ResourceManager {
         return url;
     }
 
-    public final static InputStream getResourceAsStream(final String name) {
+    public static InputStream getResourceAsStream(final String name) {
         return Thread.currentThread().getContextClassLoader().getResourceAsStream(name);
     }
 
-    public final static File getResourceAsFile(final String name) throws FileNotFoundException {
+    public static File getResourceAsFile(final String name) throws FileNotFoundException {
         return new File(getResource(name).getPath());
     }
 
@@ -142,10 +140,6 @@ public class ResourceManager {
         String filename = getString(key);
         String path = IMG_PATH + slash + filename;
         URL url = getResource(path);
-        if (url == null) {
-            throw new IllegalStateException("The file associated with key '" + key
-                    + "' does not exist or the invoker doesn't have adequate  privileges to get the resource");
-        }
         return new ImageIcon(url);
     }
 }

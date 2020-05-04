@@ -53,7 +53,7 @@ public class ApplicationController {
         this.view.showGui();
     }
 
-    public ArrayList<FileInfo> applyFileFilter(final FileFilter filter) {
+    public void applyFileFilter(final FileFilter filter) {
         if (filter != null) {
             this.logger.debug("Aplying filter : " + filter.toString());
             ArrayList<FileInfo> acceptedFiles = new ArrayList<>();
@@ -63,18 +63,17 @@ public class ApplicationController {
                 }
             }
             this.model.setCurrentFileSelection(acceptedFiles);
-            return acceptedFiles;
+            return;
         }
         this.logger.debug("Filter ignored because it is null");
-        return null;
     }
 
     public void renameCurrentSelection(final String pattern, final boolean preview) throws MalformedTagException {
-        Matcher m = Pattern.compile("\\{(.*?)\\}").matcher(pattern);
+        Matcher m = Pattern.compile("\\{(.*?)}").matcher(pattern);
         ArrayList<Tag> tags = new ArrayList<>();
         int cpt = 0;
         while (m.find()) {
-            Tag tag = null;
+            Tag tag;
             String tagStr = m.group(1);
             if (tagStr.contains("{") || tagStr.contains("}")) {
                 throw new MalformedTagException("Nested brackets detected : " + tagStr);
@@ -98,7 +97,7 @@ public class ApplicationController {
             String filename = pattern;
             // Construction du pattern
             for (Tag tag : tags) {
-                filename = filename.replace(tag.toTagString(), computeTag(tag, file, cpt));
+                filename = filename.replace(tag.toTagString(), computeTag(tag, file));
             }
             if (preview) {
                 file.setNewName(filename + "." + file.getExtension());
@@ -114,7 +113,7 @@ public class ApplicationController {
         this.model.setCurrentFileSelection(this.model.getFileSelection());
     }
 
-    private static String computeTag(final Tag tag, final FileInfo file, final int iFile) {
+    private static String computeTag(final Tag tag, final FileInfo file) {
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat year = new SimpleDateFormat("yyyy");
@@ -135,7 +134,6 @@ public class ApplicationController {
             case DIR_NAME:
                 return file.getFile().getParentFile().getName();
             case FILE_NAME:
-                return FilenameUtils.getBaseName(file.getDisplayName());
             case IMPORTED_NAME:
                 return FilenameUtils.getBaseName(file.getDisplayName());
             default:

@@ -113,11 +113,8 @@ public class FileTableModel extends AbstractTableModel {
                 case 0:
                     return Icon.class;
                 case 1:
-                    return String.class;
                 case 2:
-                    return String.class;
                 case 3:
-                    return String.class;
                 case 4:
                     return String.class;
                 default:

@@ -41,14 +41,10 @@ public class FileRenamer {
         configureLogger();
         setNimbusLookAndFeel();
 
-        SwingUtilities.invokeLater(new Runnable() {
-
-            @Override
-            public void run() {
-                ApplicationModel model = new ApplicationModel();
-                ApplicationController controller = new ApplicationController(model);
-                controller.showGui();
-            }
+        SwingUtilities.invokeLater(() -> {
+            ApplicationModel model = new ApplicationModel();
+            ApplicationController controller = new ApplicationController(model);
+            controller.showGui();
         });
     }
 

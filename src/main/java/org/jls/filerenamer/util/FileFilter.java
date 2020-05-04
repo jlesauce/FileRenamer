@@ -33,11 +33,11 @@ import org.apache.commons.io.FilenameUtils;
 
 public class FileFilter {
 
-    private String startsWith;
-    private String endsWith;
-    private String contains;
-    private FileNameExtensionFilter extensionFilter;
-    private String regex;
+    private final String startsWith;
+    private final String endsWith;
+    private final String contains;
+    private final FileNameExtensionFilter extensionFilter;
+    private final String regex;
 
     public FileFilter(String startsWith, String endsWith, String contains, FileNameExtensionFilter extensionFilter,
                       String regex) {
@@ -82,13 +82,13 @@ public class FileFilter {
     @Override
     public String toString() {
         String[] extensions = this.extensionFilter != null ? this.extensionFilter.getExtensions() : null;
-        String exs = null;
+        StringBuilder exs = null;
         if (extensions != null) {
-            exs = "";
+            exs = new StringBuilder();
             for (String ex : extensions) {
-                exs += ex + ",";
+                exs.append(ex).append(",");
             }
-            exs = exs.substring(0, exs.length() - 1);
+            exs = new StringBuilder(exs.substring(0, exs.length() - 1));
         }
         String instance = getClass().getSimpleName() + "@" + Integer.toHexString(System.identityHashCode(this));
         return "[" + instance + ", StartsWith=" + this.startsWith + ", EndsWith=" + this.endsWith + ", Contains="

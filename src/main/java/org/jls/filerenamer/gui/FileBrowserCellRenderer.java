@@ -45,7 +45,7 @@ public class FileBrowserCellRenderer extends DefaultTreeCellRenderer {
     private Color bgNonSelectedColor;
     private Color fgNonSelectedColor;
 
-    public FileBrowserCellRenderer(final JTree tree) {
+    public FileBrowserCellRenderer() {
         label = new JLabel();
         label.setOpaque(true);
         fileSystemView = FileSystemView.getFileSystemView();

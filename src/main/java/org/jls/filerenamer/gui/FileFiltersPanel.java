@@ -78,13 +78,7 @@ public class FileFiltersPanel extends JPanel implements ActionListener {
     }
 
     public void pop(final String title, final String msg, final int type) {
-        SwingUtilities.invokeLater(new Runnable() {
-
-            @Override
-            public void run() {
-                JOptionPane.showMessageDialog(controller.getView(), msg, title, type);
-            }
-        });
+        SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog(controller.getView(), msg, title, type));
     }
 
     private void createComponents() {

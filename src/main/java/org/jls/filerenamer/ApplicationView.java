@@ -49,13 +49,6 @@ import org.jls.filerenamer.util.TableColumnAdjuster;
 
 import net.miginfocom.swing.MigLayout;
 
-/**
- * Fenêtre principale de l'application.
- *
- * @author AwaX
- * @created 23 oct. 2014
- * @version 1.0
- */
 public class ApplicationView extends JFrame implements Observer, TreeSelectionListener {
 
     private static final long serialVersionUID = 807507002677441420L;
@@ -71,14 +64,6 @@ public class ApplicationView extends JFrame implements Observer, TreeSelectionLi
     private RenamingPanel renamingPanel;
     private TableColumnAdjuster tableAdjuster;
 
-    /**
-     * Permet d'instancier la fenêtre principale de l'application.
-     *
-     * @param model
-     *            Modèle de données de l'application.
-     * @param controller
-     *            Contrôleur de l'application.
-     */
     public ApplicationView(final ApplicationModel model, final ApplicationController controller) {
         super(model.getAppName());
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -92,20 +77,13 @@ public class ApplicationView extends JFrame implements Observer, TreeSelectionLi
         model.addObserver(this);
     }
 
-    /**
-     * Permet d'afficher l'application.
-     */
-    public void showGui () {
+    public void showGui() {
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
     }
 
-    /**
-     * Permet d'instancier les différents éléments qui composent l'interface
-     * graphique.
-     */
-    private void createComponents () {
+    private void createComponents() {
         this.fileBrowser = new FileTree();
         this.fileTable = new FileTable(new FileTableModel(this.model.getCurrentFileSelection()));
         this.fileTable.getTableModel().setShowOnlyFiles(true);
@@ -118,11 +96,7 @@ public class ApplicationView extends JFrame implements Observer, TreeSelectionLi
         this.tableAdjuster.setOnlyAdjustLarger(true);
     }
 
-    /**
-     * Permet de créer l'interface graphique à partir de tous les éléments qui la
-     * compose.
-     */
-    private void createGui () {
+    private void createGui() {
         // Top panels
         JScrollPane browserScroll = new JScrollPane(this.fileBrowser.getJTree());
         JScrollPane tableScroll = new JScrollPane(this.fileTable);
@@ -141,16 +115,12 @@ public class ApplicationView extends JFrame implements Observer, TreeSelectionLi
         add(tabbedPane, "grow");
     }
 
-    /**
-     * Permet d'ajouter les différents écouteurs aux composants de l'interface
-     * graphique.
-     */
-    private void addListeners () {
+    private void addListeners() {
         this.fileBrowser.getJTree().addTreeSelectionListener(this);
     }
 
     @Override
-    public void update (final Observable o, final Object arg) {
+    public void update(final Observable o, final Object arg) {
         if (o instanceof ApplicationModel) {
             // Mise à jour de la sélection
             this.logger.debug("Updating current file selection");
@@ -160,7 +130,7 @@ public class ApplicationView extends JFrame implements Observer, TreeSelectionLi
     }
 
     @Override
-    public void valueChanged (final TreeSelectionEvent e) {
+    public void valueChanged(final TreeSelectionEvent e) {
         // File Browser
         if (e.getSource().equals(this.fileBrowser.getJTree())) {
             DefaultMutableTreeNode node = (DefaultMutableTreeNode) e.getPath().getLastPathComponent();

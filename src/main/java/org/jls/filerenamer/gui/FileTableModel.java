@@ -35,7 +35,7 @@ public class FileTableModel extends AbstractTableModel {
 
     private static final long serialVersionUID = 2054550595249194702L;
 
-    private final String[] columns = { "Icon", "Ext", "Name", "Final Name", "Path" };
+    private final String[] columns = {"Icon", "Ext", "Name", "Final Name", "Path"};
     private final ArrayList<FileInfo> fileInfoList;
 
     private boolean showOnlyDirectories;
@@ -48,13 +48,13 @@ public class FileTableModel extends AbstractTableModel {
         showOnlyFiles = false;
     }
 
-    public void updateTableData (final ArrayList<FileInfo> files) {
+    public void updateTableData(final ArrayList<FileInfo> files) {
         fileInfoList.clear();
         addFilesToTable(files);
         fireTableDataChanged();
     }
 
-    private void addFilesToTable (final ArrayList<FileInfo> files) {
+    private void addFilesToTable(final ArrayList<FileInfo> files) {
         for (FileInfo file : files) {
             if (file.getFile().isDirectory() && !showOnlyFiles) {
                 fileInfoList.add(file);
@@ -64,28 +64,28 @@ public class FileTableModel extends AbstractTableModel {
         }
     }
 
-    public void setShowOnlyDirectories (final boolean onlyDirectories) {
+    public void setShowOnlyDirectories(final boolean onlyDirectories) {
         showOnlyDirectories = onlyDirectories;
         showOnlyFiles = !onlyDirectories;
     }
 
-    public void setShowOnlyFiles (final boolean onlyFiles) {
+    public void setShowOnlyFiles(final boolean onlyFiles) {
         showOnlyFiles = onlyFiles;
         showOnlyDirectories = !onlyFiles;
     }
 
     @Override
-    public int getRowCount () {
+    public int getRowCount() {
         return fileInfoList != null ? fileInfoList.size() : 0;
     }
 
     @Override
-    public int getColumnCount () {
+    public int getColumnCount() {
         return columns != null ? columns.length : 0;
     }
 
     @Override
-    public Object getValueAt (final int rowIndex, final int columnIndex) {
+    public Object getValueAt(final int rowIndex, final int columnIndex) {
         if (rowIndex >= 0 && rowIndex < getRowCount() && columnIndex >= 0 && columnIndex < getColumnCount()) {
             FileInfo file = fileInfoList.get(rowIndex);
             switch (columnIndex) {
@@ -107,7 +107,7 @@ public class FileTableModel extends AbstractTableModel {
     }
 
     @Override
-    public Class<?> getColumnClass (final int columnIndex) {
+    public Class<?> getColumnClass(final int columnIndex) {
         if (columnIndex >= 0 && columnIndex < getColumnCount()) {
             switch (columnIndex) {
                 case 0:
@@ -128,7 +128,7 @@ public class FileTableModel extends AbstractTableModel {
     }
 
     @Override
-    public String getColumnName (final int column) {
+    public String getColumnName(final int column) {
         if (column >= 0 && column < getColumnCount()) {
             return columns[column];
         }
@@ -136,11 +136,11 @@ public class FileTableModel extends AbstractTableModel {
     }
 
     @Override
-    public boolean isCellEditable (final int rowIndex, final int columnIndex) {
+    public boolean isCellEditable(final int rowIndex, final int columnIndex) {
         return false;
     }
 
     @Override
-    public void setValueAt (final Object aValue, final int rowIndex, final int columnIndex) {
+    public void setValueAt(final Object aValue, final int rowIndex, final int columnIndex) {
     }
 }

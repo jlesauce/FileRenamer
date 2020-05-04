@@ -37,52 +37,23 @@ import org.jls.filerenamer.util.FileInfo;
 import org.jls.filerenamer.util.MalformedTagException;
 import org.jls.filerenamer.util.Tag;
 
-/**
- * Contrôleur de l'application.
- *
- * @author AwaX
- * @created 24 oct. 2014
- * @version 1.0
- */
 public class ApplicationController {
 
     private final ApplicationModel model;
     private final ApplicationView view;
     private final Logger logger;
 
-    /**
-     * Permet d'instancier le contrôleur de l'application.
-     *
-     * @param model
-     *            Modèle de données de l'application.
-     */
     public ApplicationController(final ApplicationModel model) {
         this.model = model;
         this.view = new ApplicationView(model, this);
         this.logger = LogManager.getLogger();
     }
 
-    /**
-     * Permet d'afficher l'interface graphique.
-     */
-    public void showGui () {
+    public void showGui() {
         this.view.showGui();
     }
 
-    /**
-     * Permet de filtrer les fichiers affichés dans la table d'affichage de la
-     * sélection en cours puis de mettre à jour le modèle de données. Si aucun
-     * filtre n'est spécifié, c'est-à-dire que la valeur <code>null</code> est
-     * passée en argument, alors aucun filtrage n'est appliqué et la valeur
-     * <code>null</code> est renvoyée.
-     *
-     * @param filter
-     *            Filtre à appliquer sur la liste de fichiers. Si la valeur
-     *            <code>null</code> est spécifiée, aucun filtrage n'est appliqué.
-     * @return Nouvelle liste de fichier après filtrage ou <code>null</code> si
-     *         aucun filtre n'est spécifié.
-     */
-    public ArrayList<FileInfo> applyFileFilter (final FileFilter filter) {
+    public ArrayList<FileInfo> applyFileFilter(final FileFilter filter) {
         if (filter != null) {
             this.logger.debug("Aplying filter : " + filter.toString());
             ArrayList<FileInfo> acceptedFiles = new ArrayList<>();
@@ -98,51 +69,29 @@ public class ApplicationController {
         return null;
     }
 
-    /**
-     * Permet de renommer la sélection en cours.
-     *
-     * @param pattern
-     *            Pattern de renommage sans extension pouvant contenir des
-     *            {@link Tag}.
-     * @param preview
-     *            <code>true</code> pour uniquement afficher le résultat sans
-     *            modifier les fichiers, <code>false</code> pour appliquer
-     *            définitivement le nouveau nom.
-     * @throws MalformedTagException
-     *             Si une erreur dans l'écriture des tags est détectée, une
-     *             exception est levée.
-     */
-    public void renameCurrentSelection (final String pattern, final boolean preview) throws MalformedTagException {
-        /*
-         * Détection des tags
-         */
+    public void renameCurrentSelection(final String pattern, final boolean preview) throws MalformedTagException {
         Matcher m = Pattern.compile("\\{(.*?)\\}").matcher(pattern);
         ArrayList<Tag> tags = new ArrayList<>();
         int cpt = 0;
         while (m.find()) {
             Tag tag = null;
-            // Extraction du tag
             String tagStr = m.group(1);
             if (tagStr.contains("{") || tagStr.contains("}")) {
                 throw new MalformedTagException("Nested brackets detected : " + tagStr);
             }
-            // Détection du tag
             try {
                 tag = Tag.valueOf(tagStr.toUpperCase());
             } catch (IllegalArgumentException e) {
                 throw new MalformedTagException("Unknown tag : " + tagStr, e);
             }
-            // Ajout du tag
             tags.add(tag);
             cpt++;
         }
-        // Si on détecte une accollade mais que le matcher n'a rien trouvé
+
         if (cpt == 0 && (pattern.contains("{") || pattern.contains("}"))) {
             throw new MalformedTagException("Open bracket detected : " + pattern);
         }
-        /*
-         * Balayage de la sélection
-         */
+
         ArrayList<FileInfo> currentSelection = this.model.getCurrentFileSelection();
         cpt = 0;
         for (FileInfo file : currentSelection) {
@@ -161,26 +110,11 @@ public class ApplicationController {
         this.model.notifyChanged(this.model.getCurrentFileSelection());
     }
 
-    /**
-     * Permet de réinitialiser la liste des fichiers affichés au moment de leur
-     * sélection par l'utilisateur dans l'arbre d'exploration des dossiers.
-     */
-    public void resetFilters () {
+    public void resetFilters() {
         this.model.setCurrentFileSelection(this.model.getFileSelection());
     }
 
-    /**
-     * Permet de générer la valeur du tag spécifié.
-     *
-     * @param tag
-     *            Tag à générer.
-     * @param file
-     *            Information sur le fichier ciblé.
-     * @param iFile
-     *            Indice du fichier dans la sélection.
-     * @return Valeur associée au tag spécifié.
-     */
-    private static String computeTag (final Tag tag, final FileInfo file, final int iFile) {
+    private static String computeTag(final Tag tag, final FileInfo file, final int iFile) {
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat year = new SimpleDateFormat("yyyy");
@@ -209,7 +143,7 @@ public class ApplicationController {
         }
     }
 
-    public ApplicationView getView () {
+    public ApplicationView getView() {
         return this.view;
     }
 }

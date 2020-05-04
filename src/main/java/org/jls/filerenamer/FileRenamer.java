@@ -37,14 +37,14 @@ public class FileRenamer {
 
     private static final String LOG4J_SYSTEM_PROPERTY_KEY = "log4j.configurationFile";
 
-    public static void main (final String[] args) {
+    public static void main(final String[] args) {
         configureLogger();
         setNimbusLookAndFeel();
 
         SwingUtilities.invokeLater(new Runnable() {
 
             @Override
-            public void run () {
+            public void run() {
                 ApplicationModel model = new ApplicationModel();
                 ApplicationController controller = new ApplicationController(model);
                 controller.showGui();
@@ -52,23 +52,23 @@ public class FileRenamer {
         });
     }
 
-    private static void configureLogger () {
+    private static void configureLogger() {
         if (!isLoggerConfigurationFileFound()) {
             setLog4jConfigurationSystemProperty();
         }
         LogManager.getLogger().info("log4j configuration file set : {}", System.getProperty(LOG4J_SYSTEM_PROPERTY_KEY));
     }
 
-    private static boolean isLoggerConfigurationFileFound () {
+    private static boolean isLoggerConfigurationFileFound() {
         return System.getProperty(LOG4J_SYSTEM_PROPERTY_KEY) != null;
     }
 
-    private static void setLog4jConfigurationSystemProperty () {
+    private static void setLog4jConfigurationSystemProperty() {
         URL url = getLog4jConfigurationFileUrl();
         System.setProperty(LOG4J_SYSTEM_PROPERTY_KEY, url.getFile());
     }
 
-    private static URL getLog4jConfigurationFileUrl () {
+    private static URL getLog4jConfigurationFileUrl() {
         String path = ResourceManager.LOG4J_FILE;
         URL url = Thread.currentThread().getContextClassLoader().getResource(path);
         if (url == null) {
@@ -78,7 +78,7 @@ public class FileRenamer {
         return url;
     }
 
-    private static void setNimbusLookAndFeel () {
+    private static void setNimbusLookAndFeel() {
         try {
             for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -90,5 +90,4 @@ public class FileRenamer {
             LogManager.getLogger().warn("Cannot set java look and feel");
         }
     }
-
 }

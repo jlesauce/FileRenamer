@@ -23,63 +23,23 @@
  */
 package org.jls.filerenamer.util;
 
-/**
- * Exception lancée par la classe {@link FileFilter} lorsqu'un des paramètres de
- * filtrage a été mal configuré.
- * 
- * @author AwaX
- * @created 28 oct. 2014
- * @version 1.0
- */
 public class InvalidFilterException extends Exception {
 
-	private static final long serialVersionUID = 53561047896779373L;
+    private static final long serialVersionUID = 53561047896779373L;
 
-	/**
-	 * Permet d'instancier une {@link InvalidFilterException} sans description.
-	 */
-	public InvalidFilterException () {
-		super();
-	}
+    public InvalidFilterException() {
+        super();
+    }
 
-	/**
-	 * Permet d'instancier une {@link InvalidFilterException} en précisant une
-	 * description de l'erreur.
-	 * 
-	 * @param msg
-	 *            Description de l'erreur.
-	 */
-	public InvalidFilterException (final String msg) {
-		super(msg);
-	}
+    public InvalidFilterException(final String msg) {
+        super(msg);
+    }
 
-	/**
-	 * Permet d'instancier une {@link InvalidFilterException} en précisant la
-	 * cause de l'erreur.
-	 * 
-	 * @param cause
-	 *            Cause de l'erreur (sauvegardée par la méthode
-	 *            {@link #getCause()}) (La valeur <code>null</code> est
-	 *            autorisée, et permet d'indiquer que la cause est inconnue ou
-	 *            inexistante).
-	 */
-	public InvalidFilterException (final Throwable cause) {
-		super(cause);
-	}
+    public InvalidFilterException(final Throwable cause) {
+        super(cause);
+    }
 
-	/**
-	 * Permet d'instancier une {@link InvalidFilterException} en précisant la
-	 * cause de l'erreur et sa description.
-	 * 
-	 * @param msg
-	 *            Description de l'erreur.
-	 * @param cause
-	 *            Cause de l'erreur (sauvegardée par la méthode
-	 *            {@link #getCause()}) (La valeur <code>null</code> est
-	 *            autorisée, et permet d'indiquer que la cause est inconnue ou
-	 *            inexistante).
-	 */
-	public InvalidFilterException (final String msg, final Throwable cause) {
-		super(msg, cause);
-	}
+    public InvalidFilterException(final String msg, final Throwable cause) {
+        super(msg, cause);
+    }
 }

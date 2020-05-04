@@ -44,7 +44,7 @@ public class FileTree implements TreeSelectionListener {
         addGuiListeners();
     }
 
-    private void createTree () {
+    private void createTree() {
         DefaultMutableTreeNode rootNode = createTreeNodes();
 
         this.tree = new JTree(new DefaultTreeModel(rootNode));
@@ -52,7 +52,7 @@ public class FileTree implements TreeSelectionListener {
         this.tree.repaint();
     }
 
-    private DefaultMutableTreeNode createTreeNodes () {
+    private DefaultMutableTreeNode createTreeNodes() {
         DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode();
         File[] rootFiles = fileSystemView.getRoots();
 
@@ -61,7 +61,7 @@ public class FileTree implements TreeSelectionListener {
         return rootNode;
     }
 
-    private void walkThroughFilesRecursively (final DefaultMutableTreeNode rootNode, final File[] rootFiles) {
+    private void walkThroughFilesRecursively(final DefaultMutableTreeNode rootNode, final File[] rootFiles) {
         for (File rootFile : rootFiles) {
             int depthInTree = 0;
             int maxDepth = 1;
@@ -69,14 +69,13 @@ public class FileTree implements TreeSelectionListener {
         }
     }
 
-    private void walkThroughRootFile (final DefaultMutableTreeNode node,
-                                      final File fromDirectory,
-                                      final int currentDepth,
-                                      final int maxDepthFromRoot) {
+    private void walkThroughRootFile(final DefaultMutableTreeNode node,
+                                     final File fromDirectory,
+                                     final int currentDepth,
+                                     final int maxDepthFromRoot) {
         if (node.isLeaf()) {
             ArrayList<File> directories = new ArrayList<>();
             ArrayList<File> files = new ArrayList<>();
-            // Détection des fichiers
             for (File file : fileSystemView.getFiles(fromDirectory, true)) {
                 if (!file.getAbsolutePath().endsWith(".lnk")) {
                     if (file.isDirectory()) {
@@ -86,17 +85,14 @@ public class FileTree implements TreeSelectionListener {
                     }
                 }
             }
-            // Stockage dans l'ordre des dossiers puis des fichiers
             directories.addAll(files);
             for (File f : directories) {
                 DefaultMutableTreeNode child = new DefaultMutableTreeNode(f);
                 node.add(child);
                 if (currentDepth < maxDepthFromRoot) {
-                    // Si c'est un dossier non vide
                     for (File subfile : fileSystemView.getFiles(f, true)) {
                         DefaultMutableTreeNode childOfChild = new DefaultMutableTreeNode(subfile);
                         child.add(childOfChild);
-                        // Appel récursif
                         int newDepth = currentDepth + 1;
                         walkThroughRootFile(node, subfile, newDepth, maxDepthFromRoot);
                     }
@@ -105,31 +101,28 @@ public class FileTree implements TreeSelectionListener {
         }
     }
 
-    private void configureTree () {
+    private void configureTree() {
         this.tree.setRootVisible(false);
         this.tree.setCellRenderer(new FileBrowserCellRenderer(this.tree));
     }
 
-    private void addGuiListeners () {
+    private void addGuiListeners() {
         this.tree.addTreeSelectionListener(this);
     }
 
     @Override
-    public void valueChanged (final TreeSelectionEvent e) {
-        // On récupère le noeud de l'évènement
+    public void valueChanged(final TreeSelectionEvent e) {
         DefaultMutableTreeNode node = (DefaultMutableTreeNode) e.getPath().getLastPathComponent();
-        // On balaye tous les noeuds d'en dessous
         for (int i = 0; i < node.getChildCount(); i++) {
             DefaultMutableTreeNode child = (DefaultMutableTreeNode) node.getChildAt(i);
             File nodeFile = (File) child.getUserObject();
-            // Si c'est un dossier alors on récupère ses fichiers
             if (nodeFile.isDirectory()) {
                 walkThroughRootFile(child, nodeFile, 0, 0);
             }
         }
     }
 
-    public JTree getJTree () {
+    public JTree getJTree() {
         return this.tree;
     }
 }

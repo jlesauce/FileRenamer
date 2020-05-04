@@ -48,7 +48,7 @@ public class ApplicationModel extends Observable {
         currentFileSelection = new ArrayList<>();
     }
 
-    public void notifyChanged (final Object... obj) {
+    public void notifyChanged(final Object... obj) {
         setChanged();
         if (obj == null || obj.length == 0) {
             notifyObservers();
@@ -60,29 +60,29 @@ public class ApplicationModel extends Observable {
         clearChanged();
     }
 
-    public String getAppName () {
+    public String getAppName() {
         return appName;
     }
 
-    public FileSystemView getFileSystemView () {
+    public FileSystemView getFileSystemView() {
         return fileSystemView;
     }
 
-    public ArrayList<FileInfo> getFileSelection () {
+    public ArrayList<FileInfo> getFileSelection() {
         return fileSelection;
     }
 
-    public void setFileSelection (final ArrayList<FileInfo> fileSelection) {
+    public void setFileSelection(final ArrayList<FileInfo> fileSelection) {
         logger.debug("Updating file selection");
         this.fileSelection = fileSelection;
         setCurrentFileSelection(fileSelection);
     }
 
-    public ArrayList<FileInfo> getCurrentFileSelection () {
+    public ArrayList<FileInfo> getCurrentFileSelection() {
         return currentFileSelection;
     }
 
-    public void setCurrentFileSelection (final ArrayList<FileInfo> fileSelection) {
+    public void setCurrentFileSelection(final ArrayList<FileInfo> fileSelection) {
         logger.debug("Updating current file selection");
         currentFileSelection = fileSelection;
         notifyChanged(fileSelection);

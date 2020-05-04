@@ -23,62 +23,23 @@
  */
 package org.jls.filerenamer.util;
 
-/**
- * Exception lancée si une chaîne contenant un tag est mal construite.
- * 
- * @author AwaX
- * @created 28 oct. 2014
- * @version 1.0
- */
 public class MalformedTagException extends Exception {
 
-	private static final long serialVersionUID = 53561047896779373L;
+    private static final long serialVersionUID = 53561047896779373L;
 
-	/**
-	 * Permet d'instancier une {@link MalformedTagException} sans description.
-	 */
-	public MalformedTagException () {
-		super();
-	}
+    public MalformedTagException() {
+        super();
+    }
 
-	/**
-	 * Permet d'instancier une {@link MalformedTagException} en précisant une
-	 * description de l'erreur.
-	 * 
-	 * @param msg
-	 *            Description de l'erreur.
-	 */
-	public MalformedTagException (final String msg) {
-		super(msg);
-	}
+    public MalformedTagException(final String msg) {
+        super(msg);
+    }
 
-	/**
-	 * Permet d'instancier une {@link MalformedTagException} en précisant la
-	 * cause de l'erreur.
-	 * 
-	 * @param cause
-	 *            Cause de l'erreur (sauvegardée par la méthode
-	 *            {@link #getCause()}) (La valeur <code>null</code> est
-	 *            autorisée, et permet d'indiquer que la cause est inconnue ou
-	 *            inexistante).
-	 */
-	public MalformedTagException (final Throwable cause) {
-		super(cause);
-	}
+    public MalformedTagException(final Throwable cause) {
+        super(cause);
+    }
 
-	/**
-	 * Permet d'instancier une {@link MalformedTagException} en précisant la
-	 * cause de l'erreur et sa description.
-	 * 
-	 * @param msg
-	 *            Description de l'erreur.
-	 * @param cause
-	 *            Cause de l'erreur (sauvegardée par la méthode
-	 *            {@link #getCause()}) (La valeur <code>null</code> est
-	 *            autorisée, et permet d'indiquer que la cause est inconnue ou
-	 *            inexistante).
-	 */
-	public MalformedTagException (final String msg, final Throwable cause) {
-		super(msg, cause);
-	}
+    public MalformedTagException(final String msg, final Throwable cause) {
+        super(msg, cause);
+    }
 }

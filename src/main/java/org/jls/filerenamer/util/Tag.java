@@ -23,24 +23,11 @@
  */
 package org.jls.filerenamer.util;
 
-/**
- * Permet de représenter les différents tags disponibles pour renommer les
- * fichiers.
- * 
- * @author AwaX
- * @created 30 oct. 2014
- * @version 1.0
- */
 public enum Tag {
 
-	DATE, YEAR, YEAR_SMALL, DAY, MONTH, DIR_NAME, FILE_NAME, IMPORTED_NAME;
+    DATE, YEAR, YEAR_SMALL, DAY, MONTH, DIR_NAME, FILE_NAME, IMPORTED_NAME;
 
-	/**
-	 * Renvoie la chaîne associée à ce tag.
-	 * 
-	 * @return Chaîne associée à ce tag.
-	 */
-	public String toTagString () {
-		return "{" + name().toLowerCase() + "}";
-	}
+    public String toTagString() {
+        return "{" + name().toLowerCase() + "}";
+    }
 }

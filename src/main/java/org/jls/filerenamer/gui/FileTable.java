@@ -40,23 +40,23 @@ public class FileTable extends JTable {
         configure();
     }
 
-    private void configure () {
+    private void configure() {
         setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         setAutoCreateRowSorter(true);
         setShowVerticalLines(false);
         getSelectionModel().addListSelectionListener(this);
     }
 
-    public void updateTableData () {
+    public void updateTableData() {
         this.tableModel.fireTableDataChanged();
     }
 
     @Override
-    public void valueChanged (final ListSelectionEvent selectionEvent) {
+    public void valueChanged(final ListSelectionEvent selectionEvent) {
         super.valueChanged(selectionEvent);
     }
 
-    public FileTableModel getTableModel () {
+    public FileTableModel getTableModel() {
         return tableModel;
     }
 }

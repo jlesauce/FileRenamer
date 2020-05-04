@@ -47,14 +47,6 @@ import org.jls.filerenamer.util.Tag;
 
 import net.miginfocom.swing.MigLayout;
 
-/**
- * Panneau permettant à l'utilisateur de renommer les fichiers de la sélection
- * en cours.
- *
- * @author AwaX
- * @created 28 oct. 2014
- * @version 1.0
- */
 public class RenamingPanel extends JPanel implements ActionListener {
 
     private static final long serialVersionUID = -6283254928957349454L;
@@ -74,12 +66,6 @@ public class RenamingPanel extends JPanel implements ActionListener {
     private JButton btnRevert;
     private JTable tagTable;
 
-    /**
-     * Permet d'instancier le panneau de renommage des fichiers.
-     *
-     * @param controller
-     *            Contrôleur de l'application.
-     */
     public RenamingPanel(final ApplicationController controller) {
         super();
         this.controller = controller;
@@ -89,33 +75,17 @@ public class RenamingPanel extends JPanel implements ActionListener {
         addListeners();
     }
 
-    /**
-     * Permet d'afficher un message à l'utilisateur de type fenêtre pop-up.
-     *
-     * @param title
-     *            Titre de la fenêtre de message.
-     * @param msg
-     *            Message à afficher.
-     * @param type
-     *            Type de message à afficher (voir {@link JOptionPane} :
-     *            ERROR_MESSAGE, INFORMATION_MESSAGE, WARNING_MESSAGE,
-     *            QUESTION_MESSAGE, or PLAIN_MESSAGE.
-     */
-    public void pop (final String title, final String msg, final int type) {
+    public void pop(final String title, final String msg, final int type) {
         SwingUtilities.invokeLater(new Runnable() {
 
             @Override
-            public void run () {
+            public void run() {
                 JOptionPane.showMessageDialog(controller.getView(), msg, title, type);
             }
         });
     }
 
-    /**
-     * Permet d'instancier les différents éléments qui composent l'interface
-     * graphique.
-     */
-    private void createComponents () {
+    private void createComponents() {
         this.lblPattern = new JLabel("Pattern :");
         this.tfPattern = new JTextField();
         this.tfExtension = new JTextField();
@@ -126,8 +96,8 @@ public class RenamingPanel extends JPanel implements ActionListener {
         this.btnApply = new JButton("Apply");
         this.btnClear = new JButton("Clear");
         this.btnRevert = new JButton("Revert");
-        // Table des tags
-        String[] col = { "Tag" };
+
+        String[] col = {"Tag"};
         String[][] tags = new String[Tag.values().length][1];
         for (int i = 0; i < Tag.values().length; i++) {
             tags[i][0] = Tag.values()[i].toString();
@@ -137,18 +107,14 @@ public class RenamingPanel extends JPanel implements ActionListener {
             private static final long serialVersionUID = 8449088512822196165L;
 
             @Override
-            public boolean isCellEditable (final int row, final int column) {
+            public boolean isCellEditable(final int row, final int column) {
                 return false;
             }
         };
         this.tagTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
 
-    /**
-     * Permet de créer l'interface graphique à partir de tous les éléments qui la
-     * compose.
-     */
-    private void createGui () {
+    private void createGui() {
         JScrollPane tagTableScroll = new JScrollPane(this.tagTable);
         tagTableScroll.setPreferredSize(new Dimension(150, 150));
 
@@ -169,14 +135,7 @@ public class RenamingPanel extends JPanel implements ActionListener {
         add(tagTableScroll, "spany, grow");
     }
 
-    /**
-     * Renvoie le tag sélectionné dans la table des tags ou <code>null</code> si
-     * aucun tag n'a été sélectionné.
-     *
-     * @return Tag sélectionné dans la table des tags ou <code>null</code> si aucun
-     *         tag n'a été sélectionné.
-     */
-    private Tag getSelectedTag () {
+    private Tag getSelectedTag() {
         int row = this.tagTable.getSelectedRow();
         if (row >= 0) {
             String tagStr = this.tagTable.getModel().getValueAt(row, 0).toString();
@@ -185,28 +144,13 @@ public class RenamingPanel extends JPanel implements ActionListener {
         return null;
     }
 
-    /**
-     * Permet d'insérer une variable dans le pattern de renommage.
-     *
-     * @param type
-     *            Type de variable.
-     * @param value
-     *            Valeur initiale de la variable.
-     * @param nbDigits
-     *            Nombre de digits à afficher.
-     */
-    public void insertVariable (final String type, final Object value, final int nbDigits) {
-        // Type entier
+    public void insertVariable(final String type, final Object value, final int nbDigits) {
         if ("Integer".equals(type)) {
             this.tfPattern.setText(this.tfPattern.getText() + "{inc=%" + nbDigits + "d," + value + "}");
         }
     }
 
-    /**
-     * Permet d'ajouter les différents écouteurs aux composants de l'interface
-     * graphique.
-     */
-    private void addListeners () {
+    private void addListeners() {
         this.btnAddTag.addActionListener(this);
         this.btnAddVar.addActionListener(this);
         this.btnPreview.addActionListener(this);
@@ -216,14 +160,10 @@ public class RenamingPanel extends JPanel implements ActionListener {
     }
 
     @Override
-    public void actionPerformed (final ActionEvent e) {
-        /*
-         * JButton
-         */
+    public void actionPerformed(final ActionEvent e) {
         if (e.getSource() instanceof JButton) {
             JButton btn = (JButton) e.getSource();
 
-            // Add Tag
             if (this.btnAddTag.equals(btn)) {
                 String old = this.tfPattern.getText();
                 int caret = this.tfPattern.getCaretPosition();
@@ -238,9 +178,7 @@ public class RenamingPanel extends JPanel implements ActionListener {
                     this.tfPattern.setText(newStr);
                 }
                 this.tfPattern.requestFocus();
-            }
-            // Add Tag
-            else if (this.btnAddVar.equals(btn)) {
+            } else if (this.btnAddVar.equals(btn)) {
                 AddVariableDialog dialog = new AddVariableDialog();
                 dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
                 dialog.setModal(true);
@@ -250,13 +188,9 @@ public class RenamingPanel extends JPanel implements ActionListener {
                 if (dialog.getDialogReturnOption() == AddVariableDialog.APPROVE_OPTION) {
                     insertVariable(dialog.getVariableType(), dialog.getVariableInitialValue(), dialog.getVariableNbOfDigits());
                 }
-            }
-            // Clear
-            else if (this.btnClear.equals(btn)) {
+            } else if (this.btnClear.equals(btn)) {
                 this.tfPattern.setText("");
-            }
-            // Preview
-            else if (this.btnPreview.equals(btn)) {
+            } else if (this.btnPreview.equals(btn)) {
                 try {
                     this.controller.renameCurrentSelection(this.tfPattern.getText(), true);
                 } catch (MalformedTagException e1) {
@@ -266,9 +200,7 @@ public class RenamingPanel extends JPanel implements ActionListener {
                             "Invalid pattern string : " + this.tfPattern.getText() + "\n\n" + e1.getMessage(),
                             JOptionPane.ERROR_MESSAGE);
                 }
-            }
-            // Apply
-            else if (this.btnApply.equals(btn)) {
+            } else if (this.btnApply.equals(btn)) {
                 try {
                     this.controller.renameCurrentSelection(this.tfPattern.getText(), true);
                     this.controller.renameCurrentSelection(this.tfPattern.getText(), false);

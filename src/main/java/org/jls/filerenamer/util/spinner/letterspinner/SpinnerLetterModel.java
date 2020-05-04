@@ -28,16 +28,6 @@ import java.util.List;
 
 import javax.swing.SpinnerListModel;
 
-/**
- * Permet d'implémenter un {@link SpinnerListModel} permettant de créer un
- * spinner affichant les lettres de A à Z. Lorsque la lettre Z est atteinte
- * alors on ajoute un digit (Exemple : AZ) ce qui revient en fait à compter en
- * base 26.
- *
- * @author Julien
- * @created 1 nov. 2014
- * @version 1.0
- */
 public class SpinnerLetterModel extends SpinnerListModel {
 
     private static final long serialVersionUID = -8797552703384030419L;
@@ -45,12 +35,6 @@ public class SpinnerLetterModel extends SpinnerListModel {
     private final ArrayList<Character> list;
     private Character value;
 
-    /**
-     * Permet d'instancier un modèle.
-     *
-     * @param value
-     *            Valeur initiale du modèle.
-     */
     public SpinnerLetterModel(final char value) {
         this.list = new ArrayList<Character>();
         for (int i = 'a'; i <= 'z'; i++) {
@@ -60,7 +44,7 @@ public class SpinnerLetterModel extends SpinnerListModel {
     }
 
     @Override
-    public List<?> getList () {
+    public List<?> getList() {
         ArrayList<Character> newList = new ArrayList<>();
         for (char c : this.list) {
             newList.add(c);
@@ -69,22 +53,22 @@ public class SpinnerLetterModel extends SpinnerListModel {
     }
 
     @Override
-    public Object getValue () {
+    public Object getValue() {
         return this.value;
     }
 
     @Override
-    public void setValue (final Object elt) {
+    public void setValue(final Object elt) {
         this.value = (Character) elt;
     }
 
     @Override
-    public Object getNextValue () {
+    public Object getNextValue() {
         return super.getNextValue();
     }
 
     @Override
-    public Object getPreviousValue () {
+    public Object getPreviousValue() {
         return super.getPreviousValue();
     }
 }

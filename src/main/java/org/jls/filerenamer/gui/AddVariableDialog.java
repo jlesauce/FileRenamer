@@ -67,7 +67,7 @@ public class AddVariableDialog extends JDialog implements ActionListener {
         addGuiListeners();
     }
 
-    private void createGuiComponents () {
+    private void createGuiComponents() {
         this.lblType = new JLabel(props.getString("addVarDialog.label.type"));
         this.lblNbDigits = new JLabel(props.getString("addVarDialog.label.nbDigits"));
         this.lblInitialValue = new JLabel(props.getString("addVarDialog.label.initialValue"));
@@ -78,12 +78,12 @@ public class AddVariableDialog extends JDialog implements ActionListener {
         this.btnCancel = new JButton(props.getString("common.label.cancel"));
     }
 
-    private String[] getVariableTypes () {
-        String[] types = { "Integer", "Letter" };
+    private String[] getVariableTypes() {
+        String[] types = {"Integer", "Letter"};
         return types;
     }
 
-    private void addGuiComponents () {
+    private void addGuiComponents() {
         setLayout(new MigLayout("insets 20 20 20 20", "[][75]", "[][][]25[]"));
         add(this.lblType, "");
         add(this.boxType, "grow, wrap");
@@ -95,19 +95,19 @@ public class AddVariableDialog extends JDialog implements ActionListener {
         add(this.btnCancel, "");
     }
 
-    private void addGuiListeners () {
+    private void addGuiListeners() {
         this.btnOk.addActionListener(this);
         this.btnCancel.addActionListener(this);
     }
 
     @Override
-    public void actionPerformed (final ActionEvent e) {
+    public void actionPerformed(final ActionEvent e) {
         if (e.getSource() instanceof JButton) {
             handleButtonAction((JButton) e.getSource());
         }
     }
 
-    private void handleButtonAction (final JButton btn) {
+    private void handleButtonAction(final JButton btn) {
         if (this.btnOk.equals(btn)) {
             handleButtonOk();
         } else if (this.btnCancel.equals(btn)) {
@@ -115,29 +115,29 @@ public class AddVariableDialog extends JDialog implements ActionListener {
         }
     }
 
-    private void handleButtonOk () {
+    private void handleButtonOk() {
         returnOption = APPROVE_OPTION;
         dispose();
     }
 
-    private void handleButtonCancel () {
+    private void handleButtonCancel() {
         returnOption = CANCEL_OPTION;
         dispose();
     }
 
-    public int getVariableNbOfDigits () {
+    public int getVariableNbOfDigits() {
         return Integer.parseInt(spNbDigits.getValue().toString());
     }
 
-    public Object getVariableInitialValue () {
+    public Object getVariableInitialValue() {
         return this.spInitialValue.getValue();
     }
 
-    public String getVariableType () {
+    public String getVariableType() {
         return this.boxType.getSelectedItem().toString();
     }
 
-    public int getDialogReturnOption () {
+    public int getDialogReturnOption() {
         return returnOption;
     }
 }

@@ -23,14 +23,14 @@
  */
 package org.jls.filerenamer;
 
-import java.util.ArrayList;
-import java.util.Observable;
-
-import javax.swing.filechooser.FileSystemView;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jls.filerenamer.util.FileInfo;
+import org.jls.filerenamer.util.ResourceManager;
+
+import javax.swing.filechooser.FileSystemView;
+import java.util.ArrayList;
+import java.util.Observable;
 
 public class ApplicationModel extends Observable {
 
@@ -42,7 +42,7 @@ public class ApplicationModel extends Observable {
 
     public ApplicationModel() {
         logger = LogManager.getLogger();
-        appName = "File Renamer";
+        appName = ResourceManager.getInstance().getString("mainPanel.frame.title");
         fileSystemView = FileSystemView.getFileSystemView();
         fileSelection = new ArrayList<>();
         currentFileSelection = new ArrayList<>();

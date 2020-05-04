@@ -23,19 +23,17 @@
  */
 package org.jls.filerenamer;
 
-import java.io.File;
-import java.net.URL;
-
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.UIManager.LookAndFeelInfo;
-
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.config.ConfigurationSource;
+import org.apache.logging.log4j.core.config.Configurator;
 import org.jls.filerenamer.util.ResourceManager;
 
-public class FileRenamer {
+import javax.swing.*;
+import javax.swing.UIManager.LookAndFeelInfo;
+import java.io.IOException;
+import java.io.InputStream;
 
-    private static final String LOG4J_SYSTEM_PROPERTY_KEY = "log4j.configurationFile";
+public class FileRenamer {
 
     public static void main(final String[] args) {
         configureLogger();
@@ -49,29 +47,19 @@ public class FileRenamer {
     }
 
     private static void configureLogger() {
-        if (!isLoggerConfigurationFileFound()) {
-            setLog4jConfigurationSystemProperty();
+        InputStream log4jInStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(ResourceManager.LOG4J_FILE);
+        if (log4jInStream == null) {
+            System.err.println("ERROR: " + ResourceManager.LOG4J_FILE + " not found");
+            return;
         }
-        LogManager.getLogger().info("log4j configuration file set : {}", System.getProperty(LOG4J_SYSTEM_PROPERTY_KEY));
-    }
 
-    private static boolean isLoggerConfigurationFileFound() {
-        return System.getProperty(LOG4J_SYSTEM_PROPERTY_KEY) != null;
-    }
-
-    private static void setLog4jConfigurationSystemProperty() {
-        URL url = getLog4jConfigurationFileUrl();
-        System.setProperty(LOG4J_SYSTEM_PROPERTY_KEY, url.getFile());
-    }
-
-    private static URL getLog4jConfigurationFileUrl() {
-        String path = ResourceManager.LOG4J_FILE;
-        URL url = Thread.currentThread().getContextClassLoader().getResource(path);
-        if (url == null) {
-            path = ResourceManager.RESOURCES_DIR + File.separator + ResourceManager.LOG4J_FILE;
-            url = Thread.currentThread().getContextClassLoader().getResource(path);
+        try {
+            ConfigurationSource source = new ConfigurationSource(log4jInStream);
+            Configurator.initialize(null, source);
+        } catch (IOException e) {
+            System.err.println("ERROR: Failed to configure logger");
+            e.printStackTrace();
         }
-        return url;
     }
 
     private static void setNimbusLookAndFeel() {

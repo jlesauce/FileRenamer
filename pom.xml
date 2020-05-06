@@ -31,9 +31,9 @@
     <groupId>org.jls</groupId>
     <artifactId>filerenamer</artifactId>
     <name>File Renamer</name>
-    <version>1.0</version>
+    <version>1.0</version> <!-- PROJECT.VERSION (Keep this tag) -->
     <packaging>jar</packaging>
-    <url>https://github.com/Awax56/FileRenamer</url>
+    <url>https://github.com/jlesauce/FileRenamer</url>
     <description>Tool to rename files in a bulk easily.</description>
     <inceptionYear>2017</inceptionYear>
 
@@ -48,7 +48,7 @@
         <log4j.version>2.13.2</log4j.version>
         <jdom.version>2.0.6</jdom.version>
         <miglayout.version>3.7.4</miglayout.version>
-        <toolbox.version>1.0.2</toolbox.version>
+        <toolbox.version>1.1</toolbox.version>
         <commons-configuration2.version>2.7</commons-configuration2.version>
         <commons-collections.version>3.2.2</commons-collections.version>
         <commons-io.version>2.6</commons-io.version>
@@ -133,6 +133,14 @@
     </dependencies>
 
     <build>
+        <!-- Specify path to project .properties -->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+
         <plugins>
             <!-- Compile Java sources -->
             <plugin>
@@ -141,8 +149,6 @@
                 <version>${mvn.compiler.version}</version>
                 <configuration>
                     <release>${jdk.release}</release>
-                    <source>13</source>
-                    <target>13</target>
                 </configuration>
             </plugin>
 

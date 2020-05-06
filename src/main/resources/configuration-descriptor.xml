@@ -25,6 +25,7 @@
   -->
 
 <Configuration xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+    <properties fileName="version.properties" config-name="version" throwExceptionOnMissing="true"/>
     <properties fileName="gui/common.properties" config-name="common" throwExceptionOnMissing="true"/>
     <properties fileName="gui/mainPanel.properties" config-name="mainPanel" throwExceptionOnMissing="true"/>
     <properties fileName="gui/fileFiltersPanel.properties" config-name="fileFiltersPanel" throwExceptionOnMissing="true"/>

@@ -42,7 +42,8 @@ public class ApplicationModel extends Observable {
 
     public ApplicationModel() {
         logger = LogManager.getLogger();
-        appName = ResourceManager.getInstance().getString("mainPanel.frame.title");
+        appName = ResourceManager.getInstance().getString("application.name") + " - Version " +
+                ResourceManager.getInstance().getString("application.version");
         fileSystemView = FileSystemView.getFileSystemView();
         fileSelection = new ArrayList<>();
         currentFileSelection = new ArrayList<>();

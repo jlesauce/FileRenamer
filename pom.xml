@@ -61,16 +61,6 @@
         <mvn.site.version>3.9.0</mvn.site.version>
     </properties>
 
-    <repositories>
-        <repository>
-            <id>github</id>
-            <name>GitHub Julien Le Sauce Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/jlesauce/Toolbox</url>
-            <releases><enabled>true</enabled></releases>
-            <snapshots><enabled>false</enabled></snapshots>
-        </repository>
-    </repositories>
-
     <!-- Project Libraries -->
     <dependencies>
         <!-- JUnit -->

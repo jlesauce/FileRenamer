@@ -27,12 +27,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jls.filerenamer.util.FileInfo;
 import org.jls.filerenamer.util.ResourceManager;
+import org.jls.toolbox.gui.AbstractModel;
 
 import javax.swing.filechooser.FileSystemView;
 import java.util.ArrayList;
-import java.util.Observable;
 
-public class ApplicationModel extends Observable {
+public class ApplicationModel extends AbstractModel {
 
     private final Logger logger;
     private final String appName;
@@ -47,18 +47,6 @@ public class ApplicationModel extends Observable {
         fileSystemView = FileSystemView.getFileSystemView();
         fileSelection = new ArrayList<>();
         currentFileSelection = new ArrayList<>();
-    }
-
-    public void notifyChanged(final Object... obj) {
-        setChanged();
-        if (obj == null || obj.length == 0) {
-            notifyObservers();
-        } else if (obj.length == 1) {
-            notifyObservers(obj);
-        } else {
-            throw new IllegalArgumentException("Only one argument accepted");
-        }
-        clearChanged();
     }
 
     public String getAppName() {

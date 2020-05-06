@@ -21,7 +21,7 @@ jobs:
       - name: 'Create ~/.m2/settings.xml'
         uses: whelk-io/maven-settings-xml-action@v4
         with:
-          servers: '[{"id": "github", "username": "${{ secrets.GITHUB_USERNAME }}", "password": "${{ secrets.GITHUB_PASSWORD }}"}]'
+          servers: '[{"id": "github", "username": "${{ github.actor }}", "password": "${{ secrets.GITHUB_TOKEN }}"}]'
       - name: Build with Maven
         run: mvn -B package --file pom.xml
       - name: Upload a Build Artifact

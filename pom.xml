@@ -67,7 +67,7 @@
             <name>GitHub Julien Le Sauce Apache Maven Packages</name>
             <url>https://maven.pkg.github.com/jlesauce/Toolbox</url>
             <releases><enabled>true</enabled></releases>
-            <snapshots><enabled>true</enabled></snapshots>
+            <snapshots><enabled>false</enabled></snapshots>
         </repository>
     </repositories>
 
